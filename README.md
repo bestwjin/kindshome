@@ -13,7 +13,7 @@ npm run dev -- --port 3001
 
 ## 연동
 
-- 서비스 포털 기본 주소: `http://localhost:3000`
+- 서비스 포털 기본 주소: `https://console.kinds.kr`
 - 변경 시 `.env.local`에 `NEXT_PUBLIC_PORTAL_URL` 설정
 
 ## 구성
