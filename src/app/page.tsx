@@ -9,7 +9,9 @@ import {
   SITE_TITLE,
   SITE_URL,
 } from "@/lib/site";
+
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 function RoundedNMark({ className = "" }: { className?: string }) {
   return (
