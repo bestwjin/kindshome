@@ -6,7 +6,7 @@ export const SITE_NAME = "kinds";
 export const SITE_TITLE = "kinds | 중소기업 IT 컨시어지·전산 유지보수";
 
 export const SITE_DESCRIPTION =
-  "중소기업·소규모 업체를 위한 AI 기반 IT 컨시어지 서비스. 전산 개발, 시스템 유지보수, 서버 모니터링, 외주 전산팀을 저렴한 이용시간 정액제로 제공합니다.";
+  "중소기업용 AI IT 컨시어지. 전산 개발·유지보수·모니터링을 이용시간 정액제로 제공합니다.";
 
 export const SITE_KEYWORDS = [
   "kinds",
