@@ -8,7 +8,9 @@ export type VisitRecord = {
   country: string;
   city: string;
   region: string;
-  ipHash: string;
+  ip: string;
+  /** @deprecated kept for older records */
+  ipHash?: string;
 };
 
 export const VISIT_KEY_PREFIX = "v:";
@@ -28,16 +30,6 @@ export function visitKey(atMs: number, id: string) {
   return `${VISIT_KEY_PREFIX}${inverted}:${id}`;
 }
 
-export async function hashIp(ip: string) {
-  if (!ip) return "";
-  const data = new TextEncoder().encode(`kinds-visit:${ip}`);
-  const digest = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(digest))
-    .slice(0, 8)
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
 export function sanitizePath(path: unknown) {
   if (typeof path !== "string" || !path.startsWith("/")) return "/";
   return path.slice(0, 200);
@@ -46,4 +38,8 @@ export function sanitizePath(path: unknown) {
 export function sanitizeText(value: unknown, max = 300) {
   if (typeof value !== "string") return "";
   return value.slice(0, max);
+}
+
+export function visitIp(visit: VisitRecord) {
+  return visit.ip || visit.ipHash || "";
 }

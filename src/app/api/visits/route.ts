@@ -1,6 +1,5 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import {
-  hashIp,
   isBotUserAgent,
   sanitizePath,
   sanitizeText,
@@ -70,7 +69,7 @@ export async function POST(request: Request) {
       country: sanitizeText(cf?.country ?? request.headers.get("cf-ipcountry"), 8),
       city: sanitizeText((cf as { city?: string } | undefined)?.city, 80),
       region: sanitizeText((cf as { region?: string } | undefined)?.region, 80),
-      ipHash: await hashIp(ip),
+      ip: sanitizeText(ip, 80),
     };
 
     await visits.put(visitKey(now, id), JSON.stringify(record), {

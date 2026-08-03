@@ -1,6 +1,7 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import type { Metadata } from "next";
 import {
+  visitIp,
   VISIT_KEY_PREFIX,
   VISIT_LIST_LIMIT,
   type VisitRecord,
@@ -103,7 +104,7 @@ export default async function VisitsAdminPage({
                   <th>지역</th>
                   <th>유입</th>
                   <th>언어</th>
-                  <th>IP 해시</th>
+                  <th>IP</th>
                   <th>UA</th>
                 </tr>
               </thead>
@@ -120,7 +121,7 @@ export default async function VisitsAdminPage({
                       {visit.referrer || "직접/없음"}
                     </td>
                     <td>{visit.language || "-"}</td>
-                    <td>{visit.ipHash || "-"}</td>
+                    <td>{visitIp(visit) || "-"}</td>
                     <td className="visits-admin-ua" title={visit.ua}>
                       {visit.ua || "-"}
                     </td>
