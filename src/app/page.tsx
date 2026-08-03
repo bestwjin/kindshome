@@ -1,5 +1,14 @@
 import Image from "next/image";
-import { KAKAO_CHAT_URL, PORTAL_URL } from "@/lib/site";
+import Link from "next/link";
+import {
+  KAKAO_CHAT_URL,
+  PORTAL_URL,
+  SITE_DESCRIPTION,
+  SITE_FAQS,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+} from "@/lib/site";
 
 function RoundedNMark({ className = "" }: { className?: string }) {
   return (
@@ -17,20 +26,122 @@ function RoundedNMark({ className = "" }: { className?: string }) {
   );
 }
 
+function JsonLd() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
+        name: SITE_NAME,
+        url: SITE_URL,
+        logo: `${SITE_URL}/kinds-logo.png`,
+        description: SITE_DESCRIPTION,
+        sameAs: [KAKAO_CHAT_URL, "https://blog.naver.com/thekinds"],
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            url: KAKAO_CHAT_URL,
+            availableLanguage: ["Korean"],
+          },
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: SITE_TITLE,
+        description: SITE_DESCRIPTION,
+        inLanguage: "ko-KR",
+        publisher: {
+          "@id": `${SITE_URL}/#organization`,
+        },
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${SITE_URL}/#webpage`,
+        url: SITE_URL,
+        name: SITE_TITLE,
+        description: SITE_DESCRIPTION,
+        isPartOf: {
+          "@id": `${SITE_URL}/#website`,
+        },
+        about: {
+          "@id": `${SITE_URL}/#service`,
+        },
+        inLanguage: "ko-KR",
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": `${SITE_URL}/#service`,
+        name: "kinds IT 컨시어지",
+        url: SITE_URL,
+        image: `${SITE_URL}/kinds-logo.png`,
+        description: SITE_DESCRIPTION,
+        provider: {
+          "@id": `${SITE_URL}/#organization`,
+        },
+        areaServed: {
+          "@type": "Country",
+          name: "KR",
+        },
+        serviceType: [
+          "IT 컨시어지",
+          "전산 유지보수",
+          "시스템 개발",
+          "서버 모니터링",
+          "외주 전산팀",
+        ],
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "KRW",
+          description:
+            "이용시간 정액제. 기본 단가 시간당 50,000원, 이용 시간 구간별 할인 적용",
+          url: `${SITE_URL}/#pricing`,
+        },
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/#faq`,
+        mainEntity: SITE_FAQS.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+      }}
+    />
+  );
+}
+
 export default function HomePage() {
   return (
     <div className="site">
+      <JsonLd />
+
       <header className="site-header">
-        <a className="header-brand" href="/" aria-label="kinds 홈">
+        <Link className="header-brand" href="/" aria-label="kinds 홈">
           <Image
             className="logo logo-on-dark header-logo"
             src="/kinds-logo.png"
-            alt="kinds"
+            alt="kinds IT 컨시어지 로고"
             width={759}
             height={235}
             priority
           />
-        </a>
+        </Link>
         <div className="header-actions">
           <a className="btn btn-ghost-light" href={PORTAL_URL}>
             서비스 포털
@@ -67,7 +178,8 @@ export default function HomePage() {
             <h1 className="hero-title">만들고, 고치고, 이어가는 IT 컨시어지 서비스</h1>
             <p className="hero-copy">
               비싼 채용 없이, 저렴한 유지비용으로 AI로 무장한 숙련된 IT
-              전문가를 곁에 두세요.
+              전문가를 곁에 두세요. 중소기업 전산 개발·유지보수·서버 모니터링을
+              외주 전산팀처럼 운영합니다.
             </p>
             <div className="hero-cta">
               <a className="btn btn-primary" href="#contact">
@@ -87,7 +199,7 @@ export default function HomePage() {
           <h2 className="section-title">어떤 고객이 이 서비스를 쓰면 좋을까요?</h2>
           <p className="section-lead">
             전산은 이미 운영 중인데, 전산팀을 직접 꾸리기엔 부담스러운
-            중소규모 업체를 위한 서비스입니다.
+            중소규모 업체를 위한 IT 컨시어지·전산 유지보수 서비스입니다.
           </p>
 
           <ul className="audience-list">
@@ -190,6 +302,13 @@ export default function HomePage() {
               <span>카카오톡 또는 포털에서 현황을 공유하고 상품을 선택합니다.</span>
             </li>
             <li>
+              <strong>무통장입금 후 입금확인 및 세금계산서 발급</strong>
+              <span>
+                선택한 상품의 결제를 진행하고 입금이 확인되면 세금계산서를
+                발급합니다.
+              </span>
+            </li>
+            <li>
               <strong>운영 시작</strong>
               <span>승인 후 요청을 등록하고 담당자가 바로 착수합니다.</span>
             </li>
@@ -217,6 +336,9 @@ export default function HomePage() {
 
           <div className="pricing-table-wrap">
             <table className="pricing-table">
+              <caption className="sr-only">
+                kinds IT 컨시어지 이용시간별 할인율과 시간당 단가
+              </caption>
               <thead>
                 <tr>
                   <th scope="col">이용 시간</th>
@@ -307,6 +429,28 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="faq" id="faq" aria-labelledby="faq-title">
+        <div className="section">
+          <p className="section-label">FAQ</p>
+          <h2 className="section-title" id="faq-title">
+            자주 묻는 질문
+          </h2>
+          <p className="section-lead">
+            kinds IT 컨시어지·전산 유지보수 서비스에 대해 가장 많이 묻는
+            내용입니다.
+          </p>
+
+          <div className="faq-list">
+            {SITE_FAQS.map((faq) => (
+              <details key={faq.question} className="faq-item">
+                <summary>{faq.question}</summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="contact-band" id="contact">
         <div>
           <h2>지금 바로 kinds와 연결하세요</h2>
@@ -332,16 +476,18 @@ export default function HomePage() {
 
       <footer className="site-footer">
         <div className="footer-inner">
-          <a className="footer-brand" href="/" aria-label="kinds 홈">
+          <Link className="footer-brand" href="/" aria-label="kinds 홈">
             <Image
               className="logo footer-logo"
               src="/kinds-logo.png"
-              alt="kinds"
+              alt="kinds IT 컨시어지 로고"
               width={759}
               height={235}
             />
-          </a>
-          <span>AI 기반 전산 개발 및 유지보수 에이전트</span>
+          </Link>
+          <span>
+            AI 기반 전산 개발 및 유지보수 에이전트 · 중소기업 IT 컨시어지
+          </span>
           <span>© {new Date().getFullYear()} kinds</span>
         </div>
       </footer>

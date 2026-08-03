@@ -15,10 +15,18 @@ npm run dev -- --port 3001
 
 - 서비스 포털 기본 주소: `https://console.kinds.kr`
 - 변경 시 `.env.local`에 `NEXT_PUBLIC_PORTAL_URL` 설정
+- 사이트 URL 기본값: `https://kinds.kr` (`NEXT_PUBLIC_SITE_URL`로 변경 가능)
+- Google Search Console 인증: `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`
+
+## SEO
+
+- `/robots.txt`, `/sitemap.xml`, Open Graph 이미지, JSON-LD(Organization/Service/FAQ) 제공
+- Canonical은 `https://kinds.kr`, `www.kinds.kr`는 apex로 영구 리다이렉트
 
 ## 구성
 
 - Hero: kinds 브랜드 중심 소개
 - Service: IT 컨시어지 핵심 가치
-- Process: 문의 → 운영 → 결과 흐름
+- Process: 문의 → 결제 → 운영 → 결과 흐름
+- FAQ: 검색·도입 관련 자주 묻는 질문
 - Contact: 카카오톡 문의 / 포털 이동
