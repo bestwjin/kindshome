@@ -2,6 +2,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { headers } from "next/headers";
 import {
   isBotUserAgent,
+  isCloudflareWorkerPseudoIp,
   sanitizePath,
   sanitizeText,
   visitKey,
@@ -29,6 +30,9 @@ export async function writeVisitRecord(input: VisitInput = {}) {
   const now = Date.now();
   const id = crypto.randomUUID().slice(0, 8);
 
+  const rawIp = sanitizeText(input.ip, 80).trim();
+  const ip = rawIp && !isCloudflareWorkerPseudoIp(rawIp) ? rawIp : "";
+
   const record: VisitRecord = {
     id,
     at: new Date(now).toISOString(),
@@ -45,7 +49,7 @@ export async function writeVisitRecord(input: VisitInput = {}) {
       input.region ?? (cf as { region?: string } | undefined)?.region,
       80,
     ),
-    ip: sanitizeText(input.ip, 80),
+    ip,
     bot: isBotUserAgent(ua),
   };
 

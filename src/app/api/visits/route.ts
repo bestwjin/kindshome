@@ -1,6 +1,7 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import {
   isBotUserAgent,
+  resolveClientIp,
   sanitizePath,
   sanitizeText,
   visitKey,
@@ -51,10 +52,11 @@ export async function POST(request: Request) {
 
     const now = Date.now();
     const id = crypto.randomUUID().slice(0, 8);
-    const ip =
-      request.headers.get("cf-connecting-ip") ??
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-      "";
+    const ip = resolveClientIp({
+      headerIp: request.headers.get("cf-connecting-ip"),
+      forwardedIp: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim(),
+      bodyIp: body.ip,
+    });
 
     const record: VisitRecord = {
       id,
@@ -63,10 +65,13 @@ export async function POST(request: Request) {
       referrer: sanitizeText(body.referrer, 500),
       ua: sanitizeText(ua, 400),
       language: sanitizeText(body.language ?? request.headers.get("accept-language"), 80),
-      country: sanitizeText(cf?.country ?? request.headers.get("cf-ipcountry"), 8),
+      country: sanitizeText(
+        body.country ?? cf?.country ?? request.headers.get("cf-ipcountry"),
+        8,
+      ),
       city: sanitizeText((cf as { city?: string } | undefined)?.city, 80),
       region: sanitizeText((cf as { region?: string } | undefined)?.region, 80),
-      ip: sanitizeText(ip, 80),
+      ip,
       bot: isBotUserAgent(ua),
     };
 
