@@ -23,5 +23,11 @@
   ],
   "images": {
     "binding": "IMAGES"
-  }
+  },
+  "kv_namespaces": [
+    {
+      "binding": "VISITS",
+      "id": "137bf168a4044867b978ceeee9381c6c"
+    }
+  ]
 }

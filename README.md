@@ -23,6 +23,12 @@ npm run dev -- --port 3001
 - `/robots.txt`, `/sitemap.xml`, Open Graph 이미지, JSON-LD(Organization/Service/FAQ) 제공
 - Canonical은 `https://kinds.kr`, `www.kinds.kr`는 apex로 영구 리다이렉트
 
+## 접속 기록
+
+- 홈페이지 방문 시 Cloudflare KV(`VISITS`)에 세션당 1회 기록
+- 조회: `https://kinds.kr/admin/visits?token=<VISITS_ADMIN_TOKEN>`
+- 시크릿 설정: `npx wrangler secret put VISITS_ADMIN_TOKEN`
+
 ## 구성
 
 - Hero: kinds 브랜드 중심 소개

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, Syne } from "next/font/google";
+import { VisitTracker } from "@/components/visit-tracker";
 import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
@@ -95,7 +96,10 @@ export default function RootLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
         />
       </head>
-      <body className="min-h-full antialiased">{children}</body>
+      <body className="min-h-full antialiased">
+        {children}
+        <VisitTracker />
+      </body>
     </html>
   );
 }
