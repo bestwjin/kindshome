@@ -9,6 +9,7 @@ export type VisitRecord = {
   city: string;
   region: string;
   ip: string;
+  bot?: boolean;
   /** @deprecated kept for older records */
   ipHash?: string;
 };

@@ -25,7 +25,7 @@ npm run dev -- --port 3001
 
 ## 접속 기록
 
-- 홈페이지 방문 시 Cloudflare KV(`VISITS`)에 세션당 1회 기록
+- 홈페이지 방문 시 Cloudflare KV(`VISITS`)에 기록 (사람/봇 모두, 봇 여부는 `bot` 필드로 표시)
 - 조회: `https://kinds.kr/admin/visits?token=<VISITS_ADMIN_TOKEN>`
 - 시크릿 설정: `npx wrangler secret put VISITS_ADMIN_TOKEN`
 

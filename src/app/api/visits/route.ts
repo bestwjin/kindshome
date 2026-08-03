@@ -33,9 +33,6 @@ export async function POST(request: Request) {
     }
 
     const ua = request.headers.get("user-agent") ?? "";
-    if (isBotUserAgent(ua)) {
-      return Response.json({ ok: true, skipped: "bot" });
-    }
 
     let body: Record<string, unknown> = {};
     const contentType = request.headers.get("content-type") ?? "";
@@ -70,6 +67,7 @@ export async function POST(request: Request) {
       city: sanitizeText((cf as { city?: string } | undefined)?.city, 80),
       region: sanitizeText((cf as { region?: string } | undefined)?.region, 80),
       ip: sanitizeText(ip, 80),
+      bot: isBotUserAgent(ua),
     };
 
     await visits.put(visitKey(now, id), JSON.stringify(record), {

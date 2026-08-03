@@ -9,6 +9,9 @@ import {
   SITE_TITLE,
   SITE_URL,
 } from "@/lib/site";
+import { recordServerVisit } from "@/lib/record-visit";
+
+export const dynamic = "force-dynamic";
 
 function RoundedNMark({ className = "" }: { className?: string }) {
   return (
@@ -126,7 +129,9 @@ function JsonLd() {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  await recordServerVisit("/");
+
   return (
     <div className="site">
       <JsonLd />

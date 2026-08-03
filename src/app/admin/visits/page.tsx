@@ -100,6 +100,7 @@ export default async function VisitsAdminPage({
                 <tr>
                   <th>시각(KST)</th>
                   <th>경로</th>
+                  <th>봇</th>
                   <th>국가</th>
                   <th>지역</th>
                   <th>유입</th>
@@ -113,6 +114,7 @@ export default async function VisitsAdminPage({
                   <tr key={`${visit.at}-${visit.id}`}>
                     <td>{formatWhen(visit.at)}</td>
                     <td>{visit.path}</td>
+                    <td>{visit.bot ? "Y" : "-"}</td>
                     <td>{visit.country || "-"}</td>
                     <td>
                       {[visit.city, visit.region].filter(Boolean).join(", ") || "-"}
