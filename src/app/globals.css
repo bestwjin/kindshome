@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f2f6f5;
-  --bg-deep: #0c2f2d;
+  --bg: #f8f9fc;
+  --bg-deep: #0a0e1a;
   --surface: #ffffff;
-  --ink: #14201f;
-  --ink-soft: #4d5c5a;
-  --muted: #7a8a87;
-  --line: #d7e3e1;
-  --brand: #0f6e6a;
-  --brand-deep: #0a524f;
-  --brand-bright: #1a9b94;
-  --brand-soft: #dff1ef;
+  --ink: #0f1419;
+  --ink-soft: #4a5568;
+  --muted: #718096;
+  --line: #e2e8f0;
+  --brand: #1e40af;
+  --brand-deep: #1e3a8a;
+  --brand-bright: #3b82f6;
+  --brand-soft: #dbeafe;
+  --accent: #06b6d4;
+  --accent-bright: #22d3ee;
   --kakao: #fee500;
   --kakao-ink: #191919;
   --radius: 0.75rem;
@@ -78,9 +80,9 @@ img {
 }
 
 .logo-brand {
-  /* #0f6e6a */
-  filter: brightness(0) saturate(100%) invert(33%) sepia(42%) saturate(980%)
-    hue-rotate(131deg) brightness(92%) contrast(92%);
+  /* #1e40af */
+  filter: brightness(0) saturate(100%) invert(22%) sepia(78%) saturate(2847%)
+    hue-rotate(215deg) brightness(94%) contrast(92%);
 }
 
 .header-brand {
@@ -167,12 +169,12 @@ img {
   min-height: 100svh;
   display: grid;
   align-items: end;
-  color: #f5fbfa;
+  color: #f8fafc;
   overflow: hidden;
   background:
-    radial-gradient(ellipse 80% 60% at 75% 20%, rgba(26, 155, 148, 0.35), transparent 55%),
-    radial-gradient(ellipse 55% 45% at 15% 80%, rgba(10, 82, 79, 0.55), transparent 50%),
-    linear-gradient(155deg, #071c1b 0%, #0c2f2d 42%, #134845 100%);
+    radial-gradient(ellipse 80% 60% at 75% 20%, rgba(59, 130, 246, 0.25), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 15% 80%, rgba(30, 58, 138, 0.45), transparent 50%),
+    linear-gradient(155deg, #0a0e1a 0%, #1e293b 42%, #334155 100%);
 }
 
 .hero-atmosphere {
@@ -185,8 +187,8 @@ img {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    linear-gradient(rgba(59, 130, 246, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.08) 1px, transparent 1px);
   background-size: 64px 64px;
   mask-image: radial-gradient(ellipse 70% 60% at 60% 40%, #000 20%, transparent 75%);
   animation: grid-drift 22s linear infinite;
@@ -205,7 +207,7 @@ img {
   height: 28rem;
   top: -6rem;
   right: -4rem;
-  background: rgba(26, 155, 148, 0.45);
+  background: rgba(59, 130, 246, 0.35);
 }
 
 .hero-orb-b {
@@ -213,7 +215,7 @@ img {
   height: 18rem;
   bottom: 10%;
   left: -4rem;
-  background: rgba(15, 110, 106, 0.4);
+  background: rgba(6, 182, 212, 0.3);
   animation-delay: -4s;
 }
 
@@ -262,7 +264,7 @@ img {
   max-width: 28rem;
   font-size: clamp(1.02rem, 2.2vw, 1.2rem);
   line-height: 1.55;
-  color: rgba(245, 251, 250, 0.82);
+  color: rgba(248, 250, 252, 0.85);
   font-weight: 450;
 }
 
@@ -307,7 +309,7 @@ img {
 }
 
 .audience {
-  background: linear-gradient(180deg, var(--bg) 0%, #e7f1f0 100%);
+  background: linear-gradient(180deg, var(--bg) 0%, #eff6ff 100%);
 }
 
 .audience .section {
@@ -423,7 +425,7 @@ img {
 }
 
 .process {
-  background: linear-gradient(180deg, #eaf3f2 0%, var(--bg) 100%);
+  background: linear-gradient(180deg, #f0f9ff 0%, var(--bg) 100%);
 }
 
 .process .section {
@@ -473,7 +475,7 @@ img {
 }
 
 .pricing {
-  background: linear-gradient(180deg, var(--bg) 0%, #e8f2f1 100%);
+  background: linear-gradient(180deg, var(--bg) 0%, #eff6ff 100%);
 }
 
 .pricing .section {
@@ -583,9 +585,9 @@ img {
   padding: 2.5rem clamp(1.4rem, 4vw, 2.75rem);
   border-radius: calc(var(--radius) + 0.35rem);
   background:
-    radial-gradient(circle at 90% 10%, rgba(26, 155, 148, 0.28), transparent 40%),
-    linear-gradient(135deg, #0d3835, #0f6e6a 70%);
-  color: #f5fbfa;
+    radial-gradient(circle at 90% 10%, rgba(59, 130, 246, 0.25), transparent 40%),
+    linear-gradient(135deg, #1e3a8a, #1e40af 70%);
+  color: #f8fafc;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -604,7 +606,7 @@ img {
 .contact-band p {
   margin: 0.55rem 0 0;
   max-width: 28rem;
-  color: rgba(245, 251, 250, 0.82);
+  color: rgba(248, 250, 252, 0.85);
   line-height: 1.55;
 }
 
