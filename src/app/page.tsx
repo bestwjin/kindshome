@@ -190,6 +190,10 @@ export default function HomePage() {
               <span>카카오톡 또는 포털에서 현황을 공유하고 상품을 선택합니다.</span>
             </li>
             <li>
+              <strong>무통장입금 후 입금확인 및 세금계산서 발급</strong>
+              <span>선택한 상품의 결제를 진행하고 입금이 확인되면 세금계산서를 발급합니다.</span>
+            </li>
+            <li>
               <strong>운영 시작</strong>
               <span>승인 후 요청을 등록하고 담당자가 바로 착수합니다.</span>
             </li>

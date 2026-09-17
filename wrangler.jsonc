@@ -5,10 +5,6 @@
   "compatibility_date": "2025-07-23",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "workers_dev": true,
-  "routes": [
-    { "pattern": "kinds.kr", "custom_domain": true },
-    { "pattern": "www.kinds.kr", "custom_domain": true }
-  ],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
