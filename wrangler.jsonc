@@ -11,7 +11,9 @@
   ],
   "assets": {
     "directory": ".open-next/assets",
-    "binding": "ASSETS"
+    "binding": "ASSETS",
+    // Keep exact .html paths (needed for Naver Search Advisor verification files).
+    "html_handling": "none"
   },
   "services": [
     {
@@ -21,5 +23,11 @@
   ],
   "images": {
     "binding": "IMAGES"
-  }
+  },
+  "kv_namespaces": [
+    {
+      "binding": "VISITS",
+      "id": "137bf168a4044867b978ceeee9381c6c"
+    }
+  ]
 }

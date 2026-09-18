@@ -1,0 +1,71 @@
+.visits-admin {
+  min-height: 100vh;
+  padding: 2rem 1.25rem 3rem;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(15, 110, 106, 0.08), transparent 40%),
+    #f2f6f5;
+  color: #14201f;
+  font-family: "Pretendard", var(--font-manrope), sans-serif;
+}
+
+.visits-admin-header h1 {
+  margin: 0;
+  font-family: var(--font-syne), "Pretendard", sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  letter-spacing: -0.04em;
+}
+
+.visits-admin-header p,
+.visits-admin-count {
+  margin: 0.45rem 0 0;
+  color: #4d5c5a;
+  font-size: 0.95rem;
+}
+
+.visits-admin-error {
+  margin-top: 1.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid #f0c2c2;
+  background: #fff5f5;
+  color: #8a2b2b;
+  border-radius: 0.75rem;
+}
+
+.visits-admin-table-wrap {
+  margin-top: 1.25rem;
+  overflow: auto;
+  border: 1px solid #d7e3e1;
+  border-radius: 0.85rem;
+  background: #fff;
+}
+
+.visits-admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 960px;
+  font-size: 0.86rem;
+}
+
+.visits-admin-table th,
+.visits-admin-table td {
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid #e6efed;
+  text-align: left;
+  vertical-align: top;
+}
+
+.visits-admin-table th {
+  position: sticky;
+  top: 0;
+  background: #eef6f5;
+  color: #0a524f;
+  font-weight: 700;
+}
+
+.visits-admin-referrer,
+.visits-admin-ua {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
