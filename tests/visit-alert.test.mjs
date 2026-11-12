@@ -36,7 +36,7 @@ test("failed delivery is not marked successful or suppressed for 30 minutes", as
   let writes = 0;
   const env = {
     TELEGRAM_BOT_TOKEN: "test-token", TELEGRAM_CHAT_ID: "test-chat",
-    VISITS: { async get() { return null; }, async put() { writes++; } },
+    VISITS: { async get() { return null; }, async put(key) { if (key.startsWith("alert:")) writes++; } },
   };
   assert.equal(await notifyVisit(env, { ip: "203.0.113.10" }), false);
   assert.equal(writes, 0);
@@ -66,7 +66,7 @@ test("external visits send Telegram messages including bots, with repeat suppres
     VISITS: {
       async get(key) { return stored.get(key) ?? null; },
       async put(key, value, options) {
-        assert.equal(options.expirationTtl, VISIT_ALERT_DEDUPE_SECONDS);
+        if (key.startsWith("alert:")) assert.equal(options.expirationTtl, VISIT_ALERT_DEDUPE_SECONDS);
         stored.set(key, value);
       },
     },

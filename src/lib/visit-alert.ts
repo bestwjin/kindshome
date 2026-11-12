@@ -80,6 +80,9 @@ export async function notifyVisit(env: VisitAlertEnv, visit: { ip: string; bot?:
   if (await visits.get(key)) return false;
 
   const result = await sendTelegramMessage(env, visitAlertMessage(visit.ip));
+  await visits.put("telegram:delivery-status", JSON.stringify({ ...result, at: new Date().toISOString() }), {
+    expirationTtl: 24 * 60 * 60,
+  });
   if (!result.ok) {
     console.warn("Telegram visit alert failed", result);
     return false;
