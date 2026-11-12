@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Manrope, Syne } from "next/font/google";
 import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
@@ -8,18 +7,7 @@ import {
   SITE_URL,
 } from "@/lib/site";
 import "./globals.css";
-
-const syne = Syne({
-  variable: "--font-syne",
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-});
-
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+import "./redesign.css";
 
 const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 
@@ -86,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${syne.variable} ${manrope.variable} h-full`}>
+    <html lang="ko" className="h-full">
       <head>
         <link
           rel="stylesheet"

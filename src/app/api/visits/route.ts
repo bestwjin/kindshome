@@ -10,6 +10,7 @@ import {
   VISIT_TTL_SECONDS,
   type VisitRecord,
 } from "@/lib/visits";
+import { notifyVisit } from "@/lib/visit-alert";
 
 export const dynamic = "force-dynamic";
 
@@ -78,6 +79,12 @@ export async function POST(request: Request) {
     await visits.put(visitKey(now, id), JSON.stringify(record), {
       expirationTtl: VISIT_TTL_SECONDS,
     });
+
+    try {
+      await notifyVisit(env, record);
+    } catch {
+      // 알림 실패가 접속 기록을 막지 않게 한다.
+    }
 
     return Response.json({ ok: true });
   } catch {

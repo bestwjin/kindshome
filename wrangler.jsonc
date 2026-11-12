@@ -2,6 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
   "name": "kindshome",
+  "account_id": "4afa470f86de21295313b1debdbb0d3f",
   "compatibility_date": "2025-07-23",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "workers_dev": true,
@@ -24,6 +25,20 @@
   "images": {
     "binding": "IMAGES"
   },
+  "send_email": [
+    {
+      "name": "CONTACT_EMAIL",
+      "destination_address": "thekinds@naver.com",
+      "allowed_sender_addresses": ["consult@contact.kinds.kr"]
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "CONTACT_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 3, "period": 60 }
+    }
+  ],
   "kv_namespaces": [
     {
       "binding": "VISITS",

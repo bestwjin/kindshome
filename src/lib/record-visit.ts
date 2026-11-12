@@ -9,6 +9,7 @@ import {
   VISIT_TTL_SECONDS,
   type VisitRecord,
 } from "@/lib/visits";
+import { notifyVisit } from "@/lib/visit-alert";
 
 type VisitInput = {
   path?: string;
@@ -56,6 +57,11 @@ export async function writeVisitRecord(input: VisitInput = {}) {
   await visits.put(visitKey(now, id), JSON.stringify(record), {
     expirationTtl: VISIT_TTL_SECONDS,
   });
+  try {
+    await notifyVisit(env, record);
+  } catch {
+    // 알림 실패가 접속 기록을 막지 않게 한다.
+  }
   return true;
 }
 

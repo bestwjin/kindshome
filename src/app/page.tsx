@@ -1,499 +1,110 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  KAKAO_CHAT_URL,
-  PORTAL_URL,
-  SITE_DESCRIPTION,
-  SITE_FAQS,
-  SITE_NAME,
-  SITE_TITLE,
-  SITE_URL,
-} from "@/lib/site";
+import BusinessPreview from "./business-preview";
+import ContactSection from "./contact-section";
+import ServiceBridge from "./service-bridge";
+import SiteIcon from "./site-icon";
+import { KAKAO_CHAT_URL, PORTAL_URL, SITE_DESCRIPTION, SITE_FAQS, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-function RoundedNMark({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 32 32"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        fill="currentColor"
-        d="M7 27.4V14a9 9 0 0 1 18 0v13.4h-5.2V14a3.8 3.8 0 0 0-7.6 0v13.4H7z"
-      />
-    </svg>
-  );
-}
-
-function JsonLd() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": `${SITE_URL}/#organization`,
-        name: SITE_NAME,
-        url: SITE_URL,
-        logo: `${SITE_URL}/kinds-logo.png`,
-        description: SITE_DESCRIPTION,
-        sameAs: [KAKAO_CHAT_URL, "https://blog.naver.com/thekinds"],
-        contactPoint: [
-          {
-            "@type": "ContactPoint",
-            contactType: "customer support",
-            url: KAKAO_CHAT_URL,
-            availableLanguage: ["Korean"],
-          },
-        ],
-      },
-      {
-        "@type": "WebSite",
-        "@id": `${SITE_URL}/#website`,
-        url: SITE_URL,
-        name: SITE_TITLE,
-        description: SITE_DESCRIPTION,
-        inLanguage: "ko-KR",
-        publisher: {
-          "@id": `${SITE_URL}/#organization`,
-        },
-      },
-      {
-        "@type": "WebPage",
-        "@id": `${SITE_URL}/#webpage`,
-        url: SITE_URL,
-        name: SITE_TITLE,
-        description: SITE_DESCRIPTION,
-        isPartOf: {
-          "@id": `${SITE_URL}/#website`,
-        },
-        about: {
-          "@id": `${SITE_URL}/#service`,
-        },
-        inLanguage: "ko-KR",
-      },
-      {
-        "@type": "ProfessionalService",
-        "@id": `${SITE_URL}/#service`,
-        name: "kinds IT 컨시어지",
-        url: SITE_URL,
-        image: `${SITE_URL}/kinds-logo.png`,
-        description: SITE_DESCRIPTION,
-        provider: {
-          "@id": `${SITE_URL}/#organization`,
-        },
-        areaServed: {
-          "@type": "Country",
-          name: "KR",
-        },
-        serviceType: [
-          "IT 컨시어지",
-          "전산 유지보수",
-          "시스템 개발",
-          "서버 모니터링",
-          "외주 전산팀",
-        ],
-        offers: {
-          "@type": "Offer",
-          priceCurrency: "KRW",
-          description:
-            "이용시간 정액제. 기본 단가 시간당 50,000원, 이용 시간 구간별 할인 적용",
-          url: `${SITE_URL}/#pricing`,
-        },
-      },
-      {
-        "@type": "FAQPage",
-        "@id": `${SITE_URL}/#faq`,
-        mainEntity: SITE_FAQS.map((faq) => ({
-          "@type": "Question",
-          name: faq.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: faq.answer,
-          },
-        })),
-      },
-    ],
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-      }}
-    />
-  );
-}
+const modules = [
+  { icon: "users" as const, title: "거래처·고객 관리", description: "거래처 정보와 담당자, 고객별 이력을 회사의 기준으로 정리합니다.", tag: "업무의 기준을 한곳에" },
+  { icon: "chart" as const, title: "견적·수주 관리", description: "견적부터 수주까지 이어지는 과정과 문서 양식을 업무에 맞춥니다.", tag: "영업의 흐름을 자연스럽게" },
+  { icon: "box" as const, title: "재고·입출고 관리", description: "품목과 창고별 재고, 입출고 정보를 필요한 화면에서 확인합니다.", tag: "물건의 흐름을 정확하게" },
+  { icon: "flow" as const, title: "인사·업무 관리", description: "직원 정보, 일정과 문서를 함께 관리할 수 있도록 구성합니다.", tag: "함께 일하는 기준을 명확하게" },
+  { icon: "shield" as const, title: "메뉴·접근 권한", description: "조직과 역할에 따라 사용할 메뉴와 데이터 접근 범위를 설정합니다.", tag: "담당자에게 필요한 화면으로" },
+  { icon: "code" as const, title: "회사별 맞춤 개발", description: "입력 항목, 업무 흐름, 출력 양식부터 필요한 추가 기능까지 협의합니다.", tag: "우리 회사만의 방식까지" },
+];
 
 export default function HomePage() {
+  const jsonLd = { "@context": "https://schema.org", "@graph": [
+    { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: SITE_NAME, url: SITE_URL, description: SITE_DESCRIPTION, logo: `${SITE_URL}/kinds-logo.png` },
+    { "@type": "WebSite", url: SITE_URL, name: SITE_TITLE, description: SITE_DESCRIPTION, inLanguage: "ko-KR" },
+    { "@type": "Service", "@id": `${SITE_URL}/#service`, name: "kinds 맞춤형 ERP 개발·관리·유지보수", serviceType: "고객사 맞춤 ERP 개발 및 지속적인 관리·유지보수", provider: { "@id": `${SITE_URL}/#organization` }, description: SITE_DESCRIPTION },
+    { "@type": "FAQPage", mainEntity: SITE_FAQS.map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })) },
+  ] };
   return (
-    <div className="site">
-      <JsonLd />
-
-      <header className="site-header">
-        <Link className="header-brand" href="/" aria-label="kinds 홈">
-          <Image
-            className="logo logo-on-dark header-logo"
-            src="/kinds-logo.png"
-            alt="kinds IT 컨시어지 로고"
-            width={759}
-            height={235}
-            priority
-          />
-        </Link>
-        <div className="header-actions">
-          <a className="btn btn-ghost-light" href={PORTAL_URL}>
-            서비스 포털
-          </a>
-          <a
-            className="btn btn-kakao"
-            href={KAKAO_CHAT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            카카오톡 문의
-          </a>
+    <div className="home-v2">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+      <a className="kh-skip" href="#main">본문으로 바로가기</a>
+      <header className="kh-header">
+        <div className="kh-header-inner">
+          <Link href="/" className="kh-brand" aria-label="kinds 홈"><Image src="/kinds-logo.png" alt="kinds" width={759} height={235} priority /></Link>
+          <nav aria-label="주 메뉴"><a href="#custom">맞춤 ERP 개발</a><a href="#care">관리·유지보수</a><a href={PORTAL_URL} target="_blank" rel="noopener noreferrer">ERP 체험</a><a href="#pricing">도입 비용</a></nav>
+          <div className="kh-header-actions">
+            <a className="kh-demo-button" href={PORTAL_URL} target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="currentColor" /><path d="m8 6 6 4-6 4Z" fill="white" /></svg>
+              데모 체험
+            </a>
+            <a className="kh-button kh-button-small kh-button-teal" href="#contact">도입 상담</a>
+          </div>
         </div>
       </header>
-
-      <section className="hero" aria-label="kinds 소개">
-        <div className="hero-atmosphere" aria-hidden="true">
-          <div className="hero-grid" />
-          <div className="hero-orb hero-orb-a" />
-          <div className="hero-orb hero-orb-b" />
-          <RoundedNMark className="hero-mark" />
-        </div>
-
-        <div className="hero-content">
-          <div className="brand-lockup">
-            <Image
-              className="logo logo-on-dark brand-logo"
-              src="/kinds-logo.png"
-              alt="kinds"
-              width={759}
-              height={235}
-              priority
-            />
-            <h1 className="hero-title">만들고, 고치고, 이어가는 IT 컨시어지 서비스</h1>
-            <p className="hero-copy">
-              비싼 채용 없이, 저렴한 유지비용으로 AI로 무장한 숙련된 IT
-              전문가를 곁에 두세요. 중소기업 전산 개발·유지보수·서버 모니터링을
-              외주 전산팀처럼 운영합니다.
-            </p>
-            <div className="hero-cta">
-              <a className="btn btn-primary" href="#contact">
-                서비스 문의하기
-              </a>
-              <a className="btn btn-ghost-light" href="#service">
-                서비스 살펴보기
-              </a>
+      <main id="main">
+        <section className="kh-hero kh-laptop-hero">
+          <div className="kh-container kh-hero-grid">
+            <div className="kh-hero-copy">
+              <p className="kh-service-flow">
+                <span className="kh-service-start">
+                  <span className="kh-service-from">고객사 맞춤 ERP 개발</span>
+                  <ServiceBridge />
+                </span>
+                <a className="kh-service-to" href="#pricing">운영·유지보수 <span>가성비 정액제</span></a>
+              </p>
+              <h1>우리 회사에 맞는 ERP.<br /><em>그다음까지, 함께.</em></h1>
+              <p className="kh-hero-description">업무를 먼저 이해하고, 필요한 기능을 만듭니다.<br />도입 이후에도 관리와 유지보수로<br className="kh-mobile-break" /> 매일의 업무를 함께합니다.</p>
+              <div className="kh-hero-actions"><a className="kh-button" href="#contact">우리 회사 ERP 상담하기</a><a className="kh-text-link" href={PORTAL_URL} target="_blank" rel="noopener noreferrer"><span className="kh-play">▷</span> 먼저 체험해보기</a></div>
+              <div className="kh-hero-promise"><span><SiteIcon name="check" /> 회사별 맞춤 개발</span><span><SiteIcon name="check" /> 도입 후 지속 관리</span></div>
             </div>
+            <figure className="kh-hero-device">
+              <Image
+                src="/goqual_mainboard.jpg"
+                alt="노트북에 표시된 Kindworks ERP 업무 대시보드의 매출 현황과 오늘의 업무"
+                width={2400}
+                height={1224}
+                preload
+                unoptimized
+              />
+            </figure>
           </div>
-        </div>
-      </section>
-
-      <section className="audience" id="audience">
-        <div className="section">
-          <p className="section-label">Who it&apos;s for</p>
-          <h2 className="section-title">어떤 고객이 이 서비스를 쓰면 좋을까요?</h2>
-          <p className="section-lead">
-            전산은 이미 운영 중인데, 전산팀을 직접 꾸리기엔 부담스러운
-            중소규모 업체를 위한 IT 컨시어지·전산 유지보수 서비스입니다.
-          </p>
-
-          <ul className="audience-list">
-            <li>
-              <strong>중소규모 사업장</strong>
-              <span>
-                업무용 전산·시스템을 쓰고 있지만, 전담 IT 인력을 상시
-                채용하기엔 규모가 맞지 않는 곳
-              </span>
-            </li>
-            <li>
-              <strong>전산팀 운영이 부담인 곳</strong>
-              <span>
-                채용·교육·관리 비용은 크고, 필요할 때마다 사람을 구하기는 더
-                어려운 곳
-              </span>
-            </li>
-            <li>
-              <strong>외주 전산팀이 필요한 곳</strong>
-              <span>
-                개발·수정·운영을 한곳에서 맡기고, 본업에만 집중하고 싶은 곳
-              </span>
-            </li>
-          </ul>
-
-          <p className="audience-closing">
-            요즘에는 AI를 잘 다루는 전문가 한 명이 많은 일을 해냅니다. 든든한
-            IT 전문가에게 저렴한 비용으로 맡겨, 외주 전산팀을 운영하세요.
-          </p>
-        </div>
-      </section>
-
-      <section className="section" id="service">
-        <p className="section-label">Service</p>
-        <h2 className="section-title">고객의 전산을 끊기지 않게 돌봅니다</h2>
-        <p className="section-lead">
-          요청 접수부터 처리 결과 전달까지, 작은 사업도 운영에 집중할 수 있도록
-          kinds가 옆에서 챙깁니다.
-        </p>
-
-        <div className="service-panel">
-          <ul className="service-list">
-            <li>
-              <strong>유지보수 요청</strong>
-              <span>현장 이슈를 빠르게 접수하고 진행 상태를 공유합니다.</span>
-            </li>
-            <li>
-              <strong>처리 결과 전달</strong>
-              <span>조치 내용과 전달 여부를 기록해 히스토리를 남깁니다.</span>
-            </li>
-            <li>
-              <strong>이용시간 패키지</strong>
-              <span>필요한 시간만큼 선결제하고 투명하게 사용합니다.</span>
-            </li>
-            <li>
-              <strong>24시간 서버·서비스 모니터링</strong>
-              <span className="service-perk">
-                10시간 이상 서비스 이용 · 서비스 이용중 무상 제공
-              </span>
-              <span>
-                서버와 핵심 서비스의 상태를 상시 감시하는 체계를 구축합니다.
-                장애 징후·응답 지연·다운타임을 빠르게 감지해 알리고, 필요 시
-                조치까지 이어가 서비스 공백을 줄입니다.
-              </span>
-            </li>
-            <li>
-              <strong>지속적인 운영 관리</strong>
-              <span className="service-perk">
-                10시간 이상 서비스 이용 · 서비스 이용중 무상 제공
-              </span>
-              <span>
-                도메인 관리와 SSL 인증서 관리·갱신 지원까지, 서비스가 끊기지
-                않도록 일상적인 운영을 함께 챙깁니다.
-              </span>
-            </li>
-            <li>
-              <strong>접근 통제</strong>
-              <span className="service-perk">
-                10시간 이상 서비스 이용 · 서비스 이용중 무상 제공
-              </span>
-              <span>
-                악의적인 공격으로부터 데이터가 침해되지 않도록, 가능한 범위에서
-                접근 통제와 보안 정책을 수립하고 운용합니다.
-              </span>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section className="process" id="process">
-        <div className="section">
-          <p className="section-label">Process</p>
-          <h2 className="section-title">요청에서 완료까지, 짧은 루프</h2>
-          <p className="section-lead">
-            복잡한 절차 없이, 상담과 포털이 같은 맥락으로 이어집니다.
-          </p>
-          <ol className="process-steps">
-            <li>
-              <strong>문의·가입</strong>
-              <span>카카오톡 또는 포털에서 현황을 공유하고 상품을 선택합니다.</span>
-            </li>
-            <li>
-              <strong>무통장입금 후 입금확인 및 세금계산서 발급</strong>
-              <span>
-                선택한 상품의 결제를 진행하고 입금이 확인되면 세금계산서를
-                발급합니다.
-              </span>
-            </li>
-            <li>
-              <strong>운영 시작</strong>
-              <span>승인 후 요청을 등록하고 담당자가 바로 착수합니다.</span>
-            </li>
-            <li>
-              <strong>결과 확인</strong>
-              <span>처리 결과와 이용시간을 포털에서 그대로 확인합니다.</span>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <section className="pricing" id="pricing">
-        <div className="section">
-          <p className="section-label">Pricing</p>
-          <h2 className="section-title">이용시간별 정액제</h2>
-          <p className="section-lead">
-            월 단위로 필요한 시간을 선결제하고, 구매한 시간만큼 이용합니다.
-            기본 단가는 시간당 5만 원이며, 이용 시간 구간에 따라 할인율이
-            적용됩니다.
-          </p>
-
-          <p className="pricing-formula">
-            적용 단가 = 시간당 5만 원 − (5만 원 × 할인율)
-          </p>
-
-          <div className="pricing-table-wrap">
-            <table className="pricing-table">
-              <caption className="sr-only">
-                kinds IT 컨시어지 이용시간별 할인율과 시간당 단가
-              </caption>
-              <thead>
-                <tr>
-                  <th scope="col">이용 시간</th>
-                  <th scope="col">할인율</th>
-                  <th scope="col">시간당 단가</th>
-                  <th scope="col">구간 최대 이용 시</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>0 ~ 10시간</td>
-                  <td>2%</td>
-                  <td>49,000원</td>
-                  <td>490,000원</td>
-                </tr>
-                <tr>
-                  <td>11 ~ 20시간</td>
-                  <td>5%</td>
-                  <td>47,500원</td>
-                  <td>950,000원</td>
-                </tr>
-                <tr>
-                  <td>21 ~ 30시간</td>
-                  <td>10%</td>
-                  <td>45,000원</td>
-                  <td>1,350,000원</td>
-                </tr>
-                <tr>
-                  <td>31 ~ 40시간</td>
-                  <td>20%</td>
-                  <td>40,000원</td>
-                  <td>1,600,000원</td>
-                </tr>
-                <tr>
-                  <td>41시간 이상</td>
-                  <td colSpan={3}>별도 협의</td>
-                </tr>
-              </tbody>
-            </table>
+          <div className="kh-container kh-lifecycle">
+            <p>처음 만드는 순간부터,<br /><strong>매일 사용하는 순간까지.</strong></p>
+            {[ ["01", "업무를 이해하고", "지금의 업무와 필요한 변화를 함께 정리합니다."], ["02", "회사에 맞게 만들고", "화면, 기능, 업무 흐름을 실제 사용에 맞춥니다."], ["03", "꾸준히 함께 관리합니다", "문의와 오류에 대응하고 운영을 이어갑니다."] ].map(([n, title, description]) => <div key={n}><span>{n}</span><div><h2>{title}</h2><p>{description}</p></div></div>)}
           </div>
+        </section>
 
-          <ul className="pricing-notes">
-            <li>
-              <strong>이용 기간</strong>
-              <span>
-                서비스 이용기간은 1달이며, 1달 내 충전 시간을 모두 사용하지 못한
-                경우 다음 달로 이월되지 않습니다. 이용기간 만료 1주일 전부터
-                알림을 드리며, 이용시간을 추가 구매하여 연장하실 수 있습니다.
-              </span>
-            </li>
-            <li>
-              <strong>이용시간 초과</strong>
-              <span>
-                추가 시간을 구매할 수 있으며, 그때에도 본래 구매 상품의 구간
-                할인율이 적용됩니다. 초과분은 별도 협의할 수 있습니다.
-              </span>
-            </li>
-            <li>
-              <strong>프로젝트성 의뢰</strong>
-              <span>
-                보름(영업일 기준 10일) 이상 소요되는 규모의 개발은 별도
-                협의합니다.
-              </span>
-            </li>
-            <li>
-              <strong>하자 보수</strong>
-              <span>
-                이미 완료된 개발 건에서 하자가 발생한 경우, 보수에 필요한
-                시간은 이용 가능 시간에서 차감하지 않습니다.
-              </span>
-            </li>
-            <li>
-              <strong>결제</strong>
-              <span>선결제(무통장입금)이며, 세금계산서를 발행합니다.</span>
-            </li>
-          </ul>
-
-          <p className="pricing-source">
-            자세한 안내:{" "}
-            <a
-              href="https://blog.naver.com/thekinds/223211072146"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              카인즈 유지보수 서비스의 비용
-            </a>
-          </p>
-        </div>
-      </section>
-
-      <section className="faq" id="faq" aria-labelledby="faq-title">
-        <div className="section">
-          <p className="section-label">FAQ</p>
-          <h2 className="section-title" id="faq-title">
-            자주 묻는 질문
-          </h2>
-          <p className="section-lead">
-            kinds IT 컨시어지·전산 유지보수 서비스에 대해 가장 많이 묻는
-            내용입니다.
-          </p>
-
-          <div className="faq-list">
-            {SITE_FAQS.map((faq) => (
-              <details key={faq.question} className="faq-item">
-                <summary>{faq.question}</summary>
-                <p>{faq.answer}</p>
-              </details>
-            ))}
+        <section className="kh-section kh-container kh-custom" id="custom">
+          <div className="kh-section-heading"><div><h2>회사의 일하는 방식이,<br /><em>시스템의 기준이 됩니다.</em></h2></div><p>같은 업종이어도 일하는 방식은 다르니까.<br />지금 쓰는 용어부터 승인 절차와 문서까지,<br />우리 회사에 필요한 모습으로 개발합니다.</p></div>
+          <div className="kh-custom-grid">
+            <BusinessPreview />
+            <div className="kh-custom-list">{[["01", "지금의 업무에서 출발합니다", "사용 중인 엑셀과 문서, 반복되는 작업을 함께 살펴보고 시스템에 담을 업무를 정리합니다."], ["02", "필요한 만큼, 제대로 맞춥니다", "기본 ERP 기능을 바탕으로 입력 항목, 화면, 권한과 출력 양식을 고객사에 맞게 구성합니다."], ["03", "실제 사용을 함께 확인합니다", "개발한 화면을 함께 검수하고, 사용자가 업무를 시작할 수 있도록 초기 도입을 지원합니다."]].map(([n, title, description]) => <article key={n}><span>{n}</span><div><h3>{title}</h3><p>{description}</p></div></article>)}<a className="kh-text-link" href="#features">구성할 수 있는 기능 살펴보기 <SiteIcon name="arrow" /></a></div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="contact-band" id="contact">
-        <div>
-          <h2>지금 바로 kinds와 연결하세요</h2>
-          <p>
-            도입 상담부터 장애 문의까지, 카카오톡으로 가장 빠르게 시작할 수
-            있습니다.
-          </p>
-        </div>
-        <div className="contact-actions">
-          <a
-            className="btn btn-kakao"
-            href={KAKAO_CHAT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            카카오톡 문의
-          </a>
-          <a className="btn btn-ghost-light" href={PORTAL_URL}>
-            서비스 포털 열기
-          </a>
-        </div>
-      </section>
+        <section className="kh-care" id="care">
+          <div className="kh-container kh-care-grid">
+            <div className="kh-care-copy"><h2>오픈은 끝이 아니라,<br /><em>함께 일하는 시작.</em></h2><p>잘 만드는 것만큼, 잘 사용하는 시간도 중요합니다.<br />사용 중 생기는 문제와 관리할 일을 함께 살피고,<br />시스템이 일상의 업무로 자리 잡도록 돕습니다.</p><a className="kh-button kh-button-light" href="#contact">운영·유지보수 상담하기</a><div className="kh-partnership"><span><SiteIcon name="code" /> 맞춤 개발</span><i /><span><SiteIcon name="shield" /> 지속 관리</span><i /><span><SiteIcon name="spark" /> 개선 협의</span></div></div>
+            <div className="kh-care-services">{[{ icon: "chart" as const, title: "안정적인 운영을 위한 관리", description: "서비스 상태와 운영 이슈를 살피고, 필요한 관리 작업을 진행합니다." }, { icon: "shield" as const, title: "오류 대응과 유지보수", description: "사용 중 발견한 오류를 확인하고 수정하며, 처리 상황을 공유합니다." }, { icon: "message" as const, title: "막힐 때 함께하는 사용 지원", description: "사용 문의를 접수하고, 업무에서 생기는 불편과 개선 요청을 함께 정리합니다." }, { icon: "spark" as const, title: "변화하는 업무에 맞춘 개선", description: "새로 필요한 기능은 범위와 비용을 먼저 협의한 뒤 개발을 진행합니다." }].map(({ icon, title, description }) => <article key={title}><span><SiteIcon name={icon} /></span><div><h3>{title}</h3><p>{description}</p></div></article>)}<p className="kh-care-note">지원 시간, 대응 방식, 서버·백업 등 세부 운영 범위는 계약 시 확정합니다.</p></div>
+          </div>
+        </section>
 
-      <footer className="site-footer">
-        <div className="footer-inner">
-          <Link className="footer-brand" href="/" aria-label="kinds 홈">
-            <Image
-              className="logo footer-logo"
-              src="/kinds-logo.png"
-              alt="kinds IT 컨시어지 로고"
-              width={759}
-              height={235}
-            />
-          </Link>
-          <span>
-            AI 기반 전산 개발 및 유지보수 에이전트 · 중소기업 IT 컨시어지
-          </span>
-          <span>© {new Date().getFullYear()} kinds</span>
-        </div>
-      </footer>
+        <section className="kh-section kh-container" id="features">
+          <div className="kh-section-heading"><div><h2>필요한 업무를 연결하고,<br />우리 회사의 기능을 더합니다.</h2></div><p>기본 기능을 활용해 시작하고,<br />회사마다 다른 업무에 맞춤 개발을 더합니다.<br />사용할 모듈과 세부 범위는 상담에서 정합니다.</p></div>
+          <div className="kh-modules">{modules.map(({ icon, title, description, tag }, index) => <article key={title}><div className="kh-module-top"><SiteIcon name={icon} /><span>0{index + 1}</span></div><h3>{title}</h3><p>{description}</p><span className="kh-module-tag">{tag}</span></article>)}</div>
+        </section>
+
+
+        <section className="kh-section kh-container" id="process"><div className="kh-section-heading"><div><h2>상담으로 시작해,<br />꾸준한 운영으로 이어집니다.</h2></div><a className="kh-text-link" href="#contact">지금의 업무 이야기하기 <SiteIcon name="arrow" /></a></div><ol className="kh-process">{[["업무 상담", "현재 업무와 필요한 기능을 듣고, 도입 방향을 함께 찾습니다."], ["설계·견적", "개발 범위와 일정, 비용과 운영 조건을 명확히 정합니다."], ["개발·도입", "회사의 방식에 맞게 개발하고 검수와 초기 사용을 지원합니다."], ["관리·유지보수", "운영 상태를 살피고, 사용 문의와 오류 대응을 이어갑니다."]].map(([title, description], index) => <li key={title}><span className="kh-step-number">0{index + 1}</span><h3>{title}</h3><p>{description}</p>{index === 3 && <span className="kh-step-ongoing">계속 함께합니다 <SiteIcon name="arrow" /></span>}</li>)}</ol></section>
+
+        <section className="kh-pricing-band" id="pricing"><div className="kh-section kh-container"><div className="kh-section-heading"><div><h2>개발은 필요한 만큼.<br />관리는 꾸준하게.</h2></div><p>처음의 맞춤 개발과 도입 이후의 관리를 나누어,<br />시작부터 운영까지 비용의 기준을 안내합니다.</p></div><div className="kh-pricing-grid"><div className="kh-build-price"><div className="kh-price-heading"><span>01</span><div><h3>우리 회사 맞춤 구축</h3><p>업무 범위에 따라 정하는 1회 개발 비용</p></div><SiteIcon name="code" /></div><div className="kh-price-options"><div><span>기본 맞춤형</span><p className="kh-price"><small>약</small>100<span>만원</span></p><p>메뉴·항목·권한 설정과<br />기본 템플릿 중심의 맞춤 구성</p></div><div><span>업무 확장형</span><p className="kh-price"><small>약</small>200<span>만원</span></p><p>회사별 업무 흐름 조정과<br />입력 화면·출력 양식 맞춤</p></div></div><p className="kh-price-foot"><SiteIcon name="check" /> 구축 기간에는 월 관리비가 발생하지 않습니다.</p></div><div className="kh-manage-price"><div className="kh-price-heading"><span>02</span><div><h3>도입 후 관리·유지보수</h3><p>사용을 시작한 뒤, 매월 이어지는 관리</p></div><SiteIcon name="shield" /></div><p className="kh-price"><small>월</small>30<span>만원</span></p><div className="kh-care-inclusions"><span><SiteIcon name="check" /> 운영 상태 확인</span><span><SiteIcon name="check" /> 오류 대응·유지보수</span><span><SiteIcon name="check" /> 사용 문의 지원</span></div><a className="kh-text-link" href="#contact">우리 회사에 맞는 견적 문의 <SiteIcon name="arrow" /></a></div></div><p className="kh-pricing-note">위 금액은 예상 비용입니다. 맞춤 개발 범위, 부가세, 서버·백업 비용과 지원 조건을 포함한 최종 견적은 상담 후 확정합니다.<br />대규모 신규 기능, 외부 연동, 데이터 이관은 별도로 범위와 비용을 협의합니다. 월 관리비는 도입 완료 후부터 적용합니다.</p></div></section>
+
+        <section className="kh-section kh-container kh-faq" id="faq"><div><h2>함께하기 전,<br />궁금한 이야기.</h2><p>더 궁금한 점은 편하게 물어보세요.</p><a className="kh-text-link" href={KAKAO_CHAT_URL} target="_blank" rel="noopener noreferrer">카카오톡으로 문의하기 <SiteIcon name="arrow" /></a></div><div className="kh-faq-list">{SITE_FAQS.map((faq, index) => <details key={faq.question}><summary><span>0{index + 1}</span>{faq.question}<i aria-hidden="true">+</i></summary><p>{faq.answer}</p></details>)}</div></section>
+
+        <ContactSection />
+      </main>
+      <footer className="kh-footer kh-container"><div className="kh-footer-top"><Link href="/" className="kh-brand" aria-label="kinds 홈"><Image src="/kinds-logo.png" alt="kinds" width={759} height={235} /></Link><p>회사마다 다른 방식에 맞춥니다.</p><a href={PORTAL_URL} target="_blank" rel="noopener noreferrer">기존 고객 포털 <span>↗</span></a></div><div className="kh-footer-bottom"><span>맞춤 ERP 개발 · 지속적인 관리와 유지보수</span><span>© {new Date().getFullYear()} kinds. All rights reserved.</span></div></footer>
     </div>
   );
 }

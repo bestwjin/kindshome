@@ -3,13 +3,13 @@ import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${SITE_NAME} IT 컨시어지`,
+    name: `${SITE_NAME} 맞춤형 ERP`,
     short_name: SITE_NAME,
     description: SITE_DESCRIPTION,
     start_url: "/",
     display: "standalone",
-    background_color: "#f2f6f5",
-    theme_color: "#0f6e6a",
+    background_color: "#ffffff",
+    theme_color: "#315bff",
     lang: "ko",
     icons: [
       {

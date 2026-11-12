@@ -3,6 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
+      // OpenNext leaves the wildcard literal when the root has no path segments.
+      {
+        source: "/",
+        has: [{ type: "host", value: "www.kinds.kr" }],
+        destination: "https://kinds.kr/",
+        permanent: true,
+      },
       {
         source: "/:path*",
         has: [{ type: "host", value: "www.kinds.kr" }],
