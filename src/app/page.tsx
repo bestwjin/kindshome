@@ -70,8 +70,26 @@ export default function HomePage() {
             </figure>
           </div>
           <div className="kh-container kh-lifecycle">
-            <p>처음 만드는 순간부터,<br /><strong>매일 사용하는 순간까지.</strong></p>
-            {[ ["01", "업무를 이해하고", "지금의 업무와 필요한 변화를 함께 정리합니다."], ["02", "회사에 맞게 만들고", "화면, 기능, 업무 흐름을 실제 사용에 맞춥니다."], ["03", "꾸준히 함께 관리합니다", "문의와 오류에 대응하고 운영을 이어갑니다."] ].map(([n, title, description]) => <div key={n}><span>{n}</span><div><h2>{title}</h2><p>{description}</p></div></div>)}
+            <div className="kh-lifecycle-intro">
+              <span className="kh-lifecycle-label">개발부터 운영까지</span>
+              <p>처음 만드는 순간부터,<br /><strong>매일 사용하는 순간까지.</strong></p>
+            </div>
+            <ol className="kh-lifecycle-steps">
+              {[
+                { n: "01", title: "업무를 이해하고", description: "지금의 업무와 필요한 변화를 함께 정리합니다." },
+                { n: "02", title: "회사에 맞게 만들고", description: "화면, 기능, 업무 흐름을 실제 사용에 맞춥니다." },
+                { n: "03", title: "꾸준히 함께 관리합니다", description: "문의와 오류에 대응하고 운영을 이어갑니다." },
+              ].map(({ n, title, description }) => (
+                <li key={n}>
+                  <div className="kh-lifecycle-step-top">
+                    <span className="kh-lifecycle-number">{n}</span>
+                    {n === "03" && <span className="kh-lifecycle-ongoing">계속 함께</span>}
+                  </div>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 

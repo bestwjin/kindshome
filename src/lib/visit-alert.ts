@@ -1,6 +1,14 @@
 /** 운영자 접속은 알림에서 제외한다. */
 export const OWNER_VISIT_IP = "182.215.75.16";
 
+const EXCLUDED_VISIT_IPS = new Set([
+  OWNER_VISIT_IP,
+  "localhost",
+  "127.0.0.1",
+  "::1",
+  "0:0:0:0:0:0:0:1",
+]);
+
 /** 같은 IP의 새로고침으로 알림이 반복되지 않게 하는 간격 */
 export const VISIT_ALERT_DEDUPE_SECONDS = 30 * 60;
 
@@ -15,11 +23,9 @@ export type VisitAlertEnv = {
   TELEGRAM_CHAT_ID?: string;
 };
 
-export function shouldNotifyVisit(ip: string, bot = false) {
-  if (bot) return false;
-  const normalized = ip.trim();
-  if (!normalized || normalized === OWNER_VISIT_IP) return false;
-  return true;
+export function shouldNotifyVisit(ip: string) {
+  const normalized = ip.trim().toLowerCase().replace(/^::ffff:/, "");
+  return Boolean(normalized) && !EXCLUDED_VISIT_IPS.has(normalized);
 }
 
 export function visitAlertMessage(ip: string) {
@@ -31,7 +37,7 @@ function alertKey(ip: string) {
 }
 
 export async function notifyVisit(env: VisitAlertEnv, visit: { ip: string; bot?: boolean }) {
-  if (!shouldNotifyVisit(visit.ip, Boolean(visit.bot))) return false;
+  if (!shouldNotifyVisit(visit.ip)) return false;
 
   const token = env.TELEGRAM_BOT_TOKEN?.trim();
   const chatId = env.TELEGRAM_CHAT_ID?.trim();
