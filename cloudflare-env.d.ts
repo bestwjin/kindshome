@@ -6,6 +6,7 @@ interface CloudflareEnv {
   VISITS_ADMIN_TOKEN?: string;
   TELEGRAM_BOT_TOKEN?: string;
   TELEGRAM_CHAT_ID?: string;
+  TELEGRAM_TEST_TOKEN?: string;
   CONTACT_EMAIL?: {
     send(message: {
       from: { name: string; email: string };

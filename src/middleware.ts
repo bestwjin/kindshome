@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import type { NextFetchEvent, NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function middleware(request: NextRequest, event: NextFetchEvent) {
   if (request.nextUrl.pathname === "/") {
     const apiUrl = new URL("/api/visits", request.url);
     const headers = new Headers({
@@ -21,7 +21,7 @@ export function middleware(request: NextRequest) {
     const country = request.headers.get("cf-ipcountry");
     if (country) headers.set("cf-ipcountry", country);
 
-    void fetch(apiUrl, {
+    event.waitUntil(fetch(apiUrl, {
       method: "POST",
       headers,
       body: JSON.stringify({
@@ -31,7 +31,11 @@ export function middleware(request: NextRequest) {
         ip,
         country: country ?? "",
       }),
-    }).catch(() => {});
+    }).then((response) => {
+      if (!response.ok) console.warn("Visit recording failed", response.status);
+    }).catch(() => {
+      console.warn("Visit recording request failed");
+    }));
   }
 
   const response = NextResponse.next();
