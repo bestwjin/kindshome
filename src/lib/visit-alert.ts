@@ -3,6 +3,7 @@ export const OWNER_VISIT_IP = "182.215.75.16";
 
 const EXCLUDED_VISIT_IPS = new Set([
   OWNER_VISIT_IP,
+  "182.172.14.75",
   "localhost",
   "127.0.0.1",
   "::1",
@@ -55,7 +56,9 @@ export async function sendTelegramMessage(env: VisitAlertEnv, text: string): Pro
   }
 }
 
-export function shouldNotifyVisit(ip: string) {
+export function shouldNotifyVisit(ip: string, country?: string) {
+  // Only notify for IPs geolocated to South Korea; unknown locations are skipped.
+  if (country?.trim().toUpperCase() !== "KR") return false;
   const normalized = ip.trim().toLowerCase().replace(/^::ffff:/, "");
   return Boolean(normalized) && !EXCLUDED_VISIT_IPS.has(normalized);
 }
@@ -68,8 +71,8 @@ function alertKey(ip: string) {
   return `alert:${ip.trim()}`;
 }
 
-export async function notifyVisit(env: VisitAlertEnv, visit: { ip: string; bot?: boolean }) {
-  if (!shouldNotifyVisit(visit.ip)) return false;
+export async function notifyVisit(env: VisitAlertEnv, visit: { ip: string; country?: string; bot?: boolean }) {
+  if (!shouldNotifyVisit(visit.ip, visit.country)) return false;
 
   const token = env.TELEGRAM_BOT_TOKEN?.trim();
   const chatId = env.TELEGRAM_CHAT_ID?.trim();

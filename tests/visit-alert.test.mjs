@@ -3,9 +3,9 @@ import assert from "node:assert/strict";
 import { OWNER_VISIT_IP, shouldNotifyVisit, visitAlertMessage, notifyVisit, sendTelegramMessage, VISIT_ALERT_DEDUPE_SECONDS } from "../src/lib/visit-alert.ts";
 
 test("owner IP and empty visits are not alerted", () => {
-  assert.equal(shouldNotifyVisit(OWNER_VISIT_IP), false);
-  assert.equal(shouldNotifyVisit(`  ${OWNER_VISIT_IP}  `), false);
-  assert.equal(shouldNotifyVisit(""), false);
+  assert.equal(shouldNotifyVisit(OWNER_VISIT_IP, "KR"), false);
+  assert.equal(shouldNotifyVisit(`  ${OWNER_VISIT_IP}  `, "KR"), false);
+  assert.equal(shouldNotifyVisit("", "KR"), false);
 });
 
 test("Telegram rejects invalid tokens, unknown chats, and blocked conversations with safe diagnostics", async (t) => {
@@ -38,18 +38,18 @@ test("failed delivery is not marked successful or suppressed for 30 minutes", as
     TELEGRAM_BOT_TOKEN: "test-token", TELEGRAM_CHAT_ID: "test-chat",
     VISITS: { async get() { return null; }, async put(key) { if (key.startsWith("alert:")) writes++; } },
   };
-  assert.equal(await notifyVisit(env, { ip: "203.0.113.10" }), false);
+  assert.equal(await notifyVisit(env, { country: "KR", ip: "203.0.113.10" }), false);
   assert.equal(writes, 0);
 });
 
 test("localhost and loopback addresses are not alerted", () => {
   for (const ip of ["localhost", " LOCALHOST ", "127.0.0.1", "::1", "0:0:0:0:0:0:0:1", "::ffff:127.0.0.1", `::ffff:${OWNER_VISIT_IP}`]) {
-    assert.equal(shouldNotifyVisit(ip), false, ip);
+    assert.equal(shouldNotifyVisit(ip, "KR"), false, ip);
   }
 });
 
 test("other visitor IPs are alerted with the site message", () => {
-  assert.equal(shouldNotifyVisit("203.0.113.10"), true);
+  assert.equal(shouldNotifyVisit("203.0.113.10", "KR"), true);
   assert.equal(visitAlertMessage(" 203.0.113.10 "), "kinds.kr 접속발생 ip:203.0.113.10");
 });
 
@@ -71,12 +71,23 @@ test("external visits send Telegram messages including bots, with repeat suppres
       },
     },
   };
-  for (const ip of [OWNER_VISIT_IP, "localhost", "127.0.0.1", "::1"]) {
-    assert.equal(await notifyVisit(env, { ip }), false);
+  for (const ip of [OWNER_VISIT_IP, "182.172.14.75", "::ffff:182.172.14.75", "localhost", "127.0.0.1", "::1"]) {
+    assert.equal(await notifyVisit(env, { ip, country: "KR" }), false);
   }
   assert.equal(messages.length, 0);
-  assert.equal(await notifyVisit(env, { ip: "203.0.113.10", bot: true }), true);
+  assert.equal(await notifyVisit(env, { country: "KR", ip: "203.0.113.10", bot: true }), true);
   assert.deepEqual(messages, [{ chat_id: "test-chat", text: "kinds.kr 접속발생 ip:203.0.113.10" }]);
-  assert.equal(await notifyVisit(env, { ip: "203.0.113.10" }), false);
+  assert.equal(await notifyVisit(env, { country: "KR", ip: "203.0.113.10" }), false);
   assert.equal(messages.length, 1);
+});
+
+ test("only South Korean IPs qualify", () => {
+for (const country of ["US", "JP", "CN", "XX", "T1", "", undefined]) assert.equal(shouldNotifyVisit("203.0.113.10", country), false);
+assert.equal(shouldNotifyVisit("203.0.113.10", " kr "), true);
+assert.equal(shouldNotifyVisit("182.172.14.75", "KR"), false);
+});
+test("foreign visits never call Telegram or KV", async (t) => {
+t.mock.method(globalThis,"fetch",()=>assert.fail("must not send"));
+const env={TELEGRAM_BOT_TOKEN:"test",TELEGRAM_CHAT_ID:"test",VISITS:{async get(){assert.fail("must not read");},async put(){assert.fail("must not write");}}};
+for(const country of ["US","JP","XX","",undefined]) assert.equal(await notifyVisit(env,{ip:"203.0.113.10",country}),false);
 });
