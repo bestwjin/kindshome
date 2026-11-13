@@ -32,11 +32,11 @@ export default function HomePage() {
       <header className="kh-header">
         <div className="kh-header-inner">
           <Link href="/" className="kh-brand" aria-label="kinds 홈"><Image src="/kinds-logo.png" alt="kinds" width={759} height={235} priority /></Link>
-          <nav aria-label="주 메뉴"><a href="#custom">맞춤 ERP 개발</a><a href="#care">관리·유지보수</a><a href={PORTAL_URL} target="_blank" rel="noopener noreferrer">ERP 체험</a><a href="#pricing">도입 비용</a></nav>
+          <nav aria-label="주 메뉴"><a href="#custom">고객사 맞춤 개발</a><a href="#care">관리·유지보수</a><a href={PORTAL_URL} target="_blank" rel="noopener noreferrer">솔루션 체험</a><a href="#pricing">도입 비용</a></nav>
           <div className="kh-header-actions">
             <a className="kh-demo-button" href={PORTAL_URL} target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="currentColor" /><path d="m8 6 6 4-6 4Z" fill="white" /></svg>
-              데모 체험
+              <svg viewBox="0 0 20 20" width="18" height="18" fill="none" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="11" y="3" width="6" height="6" rx="1.5" fill="currentColor" opacity=".55"/><rect x="3" y="11" width="6" height="6" rx="1.5" fill="currentColor" opacity=".55"/><rect x="11" y="11" width="6" height="6" rx="1.5" fill="currentColor" opacity=".8"/></svg>
+              솔루션 체험 <span aria-hidden="true">↗</span>
             </a>
             <a className="kh-button kh-button-small kh-button-teal" href="#contact">도입 상담</a>
           </div>
@@ -48,14 +48,14 @@ export default function HomePage() {
             <div className="kh-hero-copy">
               <p className="kh-service-flow">
                 <span className="kh-service-start">
-                  <span className="kh-service-from">고객사 맞춤 ERP 개발</span>
+                  <span className="kh-service-from">맞춤 전산시스템 개발</span>
                   <ServiceBridge />
                 </span>
                 <a className="kh-service-to" href="#pricing">운영·유지보수 <span>가성비 정액제</span></a>
               </p>
-              <h1>우리 회사에 맞는 ERP.<br /><em>그다음까지, 함께.</em></h1>
-              <p className="kh-hero-description">업무를 먼저 이해하고, 필요한 기능을 만듭니다.<br />도입 이후에도 관리와 유지보수로<br className="kh-mobile-break" /> 매일의 업무를 함께합니다.</p>
-              <div className="kh-hero-actions"><a className="kh-button" href="#contact">우리 회사 ERP 상담하기</a><a className="kh-text-link" href={PORTAL_URL} target="_blank" rel="noopener noreferrer"><span className="kh-play">▷</span> 먼저 체험해보기</a></div>
+              <h1>우리 회사에 맞는 IT<span className="kh-hero-systems">ERPㆍCRMㆍSCMㆍ백오피스</span><em>그다음까지, 함께.</em></h1>
+              <p className="kh-hero-description">고객의 업무를 먼저 이해하고, 딱 맞는 기능을 만듭니다.<br />구축 이후에도 지속적인 관리와 가성비 유지보수로,<br />고객의 전산팀이 되어 계속 함께합니다.</p>
+              <div className="kh-hero-actions"><a className="kh-button kh-consult-button" href="#contact">우리회사 맞춤 상담하기</a><a className="kh-text-link" href={PORTAL_URL} target="_blank" rel="noopener noreferrer"><span className="kh-play">▷</span> 먼저 체험해보기</a></div>
               <div className="kh-hero-promise"><span><SiteIcon name="check" /> 회사별 맞춤 개발</span><span><SiteIcon name="check" /> 도입 후 지속 관리</span></div>
             </div>
             <figure className="kh-hero-device">
@@ -114,15 +114,15 @@ export default function HomePage() {
         </section>
 
 
-        <section className="kh-section kh-container" id="process"><div className="kh-section-heading"><div><h2>상담으로 시작해,<br />꾸준한 운영으로 이어집니다.</h2></div><a className="kh-text-link" href="#contact">지금의 업무 이야기하기 <SiteIcon name="arrow" /></a></div><ol className="kh-process">{[["업무 상담", "현재 업무와 필요한 기능을 듣고, 도입 방향을 함께 찾습니다."], ["설계·견적", "개발 범위와 일정, 비용과 운영 조건을 명확히 정합니다."], ["개발·도입", "회사의 방식에 맞게 개발하고 검수와 초기 사용을 지원합니다."], ["관리·유지보수", "운영 상태를 살피고, 사용 문의와 오류 대응을 이어갑니다."]].map(([title, description], index) => <li key={title}><span className="kh-step-number">0{index + 1}</span><h3>{title}</h3><p>{description}</p>{index === 3 && <span className="kh-step-ongoing">계속 함께합니다 <SiteIcon name="arrow" /></span>}</li>)}</ol></section>
+        <section className="kh-section kh-container" id="process"><div className="kh-section-heading"><div><h2>상담으로 시작해,<br />꾸준한 운영으로 이어집니다.</h2></div><a className="kh-text-link" href="#contact">지금 하시는 업무를 알려주세요 <SiteIcon name="arrow" /></a></div><ol className="kh-process">{[["업무 상담", "현재 업무와 필요한 기능을 듣고, 도입 방향을 함께 찾습니다."], ["설계·견적", "개발 범위와 일정, 비용과 운영 조건을 명확히 정합니다."], ["개발·도입", "회사의 방식에 맞게 개발하고 검수와 초기 사용을 지원합니다."], ["관리·유지보수", "운영 상태를 살피고, 사용 문의와 오류 대응을 이어갑니다."]].map(([title, description], index) => <li key={title}><span className="kh-step-number">0{index + 1}</span><h3>{title}</h3><p>{description}</p>{index === 3 && <span className="kh-step-ongoing">계속 함께합니다 <SiteIcon name="arrow" /></span>}</li>)}</ol></section>
 
-        <section className="kh-pricing-band" id="pricing"><div className="kh-section kh-container"><div className="kh-section-heading"><div><h2>개발은 필요한 만큼.<br />관리는 꾸준하게.</h2></div><p>처음의 맞춤 개발과 도입 이후의 관리를 나누어,<br />시작부터 운영까지 비용의 기준을 안내합니다.</p></div><div className="kh-pricing-grid"><div className="kh-build-price"><div className="kh-price-heading"><span>01</span><div><h3>우리 회사 맞춤 구축</h3><p>업무 범위에 따라 정하는 1회 개발 비용</p></div><SiteIcon name="code" /></div><div className="kh-price-options"><div><span>기본 맞춤형</span><p className="kh-price"><small>약</small>100<span>만원</span></p><p>메뉴·항목·권한 설정과<br />기본 템플릿 중심의 맞춤 구성</p></div><div><span>업무 확장형</span><p className="kh-price"><small>약</small>200<span>만원</span></p><p>회사별 업무 흐름 조정과<br />입력 화면·출력 양식 맞춤</p></div></div><p className="kh-price-foot"><SiteIcon name="check" /> 구축 기간에는 월 관리비가 발생하지 않습니다.</p></div><div className="kh-manage-price"><div className="kh-price-heading"><span>02</span><div><h3>도입 후 관리·유지보수</h3><p>사용을 시작한 뒤, 매월 이어지는 관리</p></div><SiteIcon name="shield" /></div><p className="kh-price"><small>월</small>30<span>만원</span></p><div className="kh-care-inclusions"><span><SiteIcon name="check" /> 운영 상태 확인</span><span><SiteIcon name="check" /> 오류 대응·유지보수</span><span><SiteIcon name="check" /> 사용 문의 지원</span></div><a className="kh-text-link" href="#contact">우리 회사에 맞는 견적 문의 <SiteIcon name="arrow" /></a></div></div><p className="kh-pricing-note">위 금액은 예상 비용입니다. 맞춤 개발 범위, 부가세, 서버·백업 비용과 지원 조건을 포함한 최종 견적은 상담 후 확정합니다.<br />대규모 신규 기능, 외부 연동, 데이터 이관은 별도로 범위와 비용을 협의합니다. 월 관리비는 도입 완료 후부터 적용합니다.</p></div></section>
+        <section className="kh-pricing-band" id="pricing"><div className="kh-section kh-container"><div className="kh-section-heading"><div><h2>개발은 필요한 만큼.<br />관리는 꾸준하게.</h2></div><p><svg className="kh-ai-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 3c.8 4.1 2.9 6.2 7 7-4.1.8-6.2 2.9-7 7-.8-4.1-2.9-6.2-7-7 4.1-.8 6.2-2.9 7-7Z" fill="currentColor"/><path d="M18.5 13c.4 2.1 1.4 3.1 3.5 3.5-2.1.4-3.1 1.4-3.5 3.5-.4-2.1-1.4-3.1-3.5-3.5 2.1-.4 3.1-1.4 3.5-3.5Z" fill="currentColor" opacity=".65"/></svg><span className="kh-ai-accent"><span>A</span><span>I</span>{" "}<span>기</span><span>술</span></span>로 고객의 요구사항을 더 빠르고 정교하게 구현합니다.<br />합리적인 월 정액제로 운영과 유지보수의 부담을 덜어드립니다.</p></div><div className="kh-pricing-grid"><div className="kh-build-price"><div className="kh-price-heading"><span>01</span><div><h3>우리 회사 맞춤 구축</h3><p>업무 범위에 따라 정하는 <strong className="kh-one-time">1회</strong> 개발 비용</p></div><SiteIcon name="code" /></div><div className="kh-price-options"><div><span>기본 맞춤형</span><p className="kh-price"><small>약</small>110<span>만원</span></p><p>메뉴·항목·권한 설정과<br />기본 템플릿 중심의 맞춤 구성</p></div><div><span>업무 확장형</span><p className="kh-price"><small>약</small>220<span>만원</span></p><p>회사별 업무 흐름 조정과<br />입력 화면·출력 양식 맞춤</p></div></div><div className="kh-enterprise-price"><div><h4>대규모 구축형</h4><p>더 큰 규모의 시스템 구축</p></div><strong>별도 협의</strong></div><p className="kh-price-foot"><SiteIcon name="check" /> 구축 기간에는 월 관리비가 발생하지 않습니다.</p></div><div className="kh-manage-price"><div className="kh-price-heading"><span>02</span><div><h3>도입 후 관리·유지보수</h3></div><SiteIcon name="shield" /></div><div className="kh-manage-plans"><div className="kh-manage-plan"><h4>관리형</h4><p className="kh-price"><small>월</small>22<span>만원</span></p><div className="kh-care-inclusions"><span><SiteIcon name="check" /> 운영 상태 확인</span><span><SiteIcon name="check" /> 오류 대응</span></div></div><div className="kh-manage-plan"><h4>유지보수형</h4><p className="kh-price"><small>월</small>55<span>만원</span></p><div className="kh-care-inclusions"><span><SiteIcon name="check" /> 사용 문의 지원</span><span><SiteIcon name="check" /> 기능 개선</span><span><SiteIcon name="check" /> 기능 확장</span><span><SiteIcon name="check" /> 업무 자동화</span></div></div></div><p className="kh-manage-common">AI 기반 시스템 모니터링 · 보안 점검 · 안정적인 운영 지원</p><a className="kh-text-link" href="#contact">우리 회사에 맞는 견적 문의 <SiteIcon name="arrow" /></a></div></div><p className="kh-pricing-note">맞춤 개발 범위, 부가세, 서버·백업 비용과 지원 조건을 포함한 최종 견적은 상담 후 확정합니다.<br />대규모 신규 기능, 외부 연동, 데이터 이관은 별도로 범위와 비용을 협의합니다. 월 관리비는 도입 완료 후부터 적용합니다.</p></div></section>
 
         <section className="kh-section kh-container kh-faq" id="faq"><div><h2>함께하기 전,<br />궁금한 이야기.</h2><p>더 궁금한 점은 편하게 물어보세요.</p><a className="kh-text-link" href={KAKAO_CHAT_URL} target="_blank" rel="noopener noreferrer">카카오톡으로 문의하기 <SiteIcon name="arrow" /></a></div><div className="kh-faq-list">{SITE_FAQS.map((faq, index) => <details key={faq.question}><summary><span>0{index + 1}</span>{faq.question}<i aria-hidden="true">+</i></summary><p>{faq.answer}</p></details>)}</div></section>
 
         <ContactSection />
       </main>
-      <footer className="kh-footer kh-container"><div className="kh-footer-top"><Link href="/" className="kh-brand" aria-label="kinds 홈"><Image src="/kinds-logo.png" alt="kinds" width={759} height={235} /></Link><p>회사마다 다른 방식에 맞춥니다.</p><a href={PORTAL_URL} target="_blank" rel="noopener noreferrer">기존 고객 포털 <span>↗</span></a></div><div className="kh-footer-bottom"><span>맞춤 ERP 개발 · 지속적인 관리와 유지보수</span><span>© {new Date().getFullYear()} kinds. All rights reserved.</span></div></footer>
+      <footer className="kh-footer kh-container"><div className="kh-footer-top"><Link href="/" className="kh-brand" aria-label="kinds 홈"><Image src="/kinds-logo.png" alt="kinds" width={759} height={235} /></Link><p><strong>카인즈</strong><br />사업자 등록번호 : 257-07-02786 | 이메일 : thekinds@naver.com</p></div><div className="kh-footer-bottom"><span>맞춤 전산시스템 개발 · 지속적인 관리와 유지보수</span><span>© {new Date().getFullYear()} kinds. All rights reserved.</span></div></footer>
     </div>
   );
 }

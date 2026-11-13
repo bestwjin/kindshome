@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useId, useState } from "react";
+import { useId } from "react";
 import { PORTAL_URL } from "@/lib/site";
 import SiteIcon from "./site-icon";
 import "./business-preview.css";
@@ -29,14 +29,12 @@ function AppIcon({ name }: { name: "home" | "search" | "bell" | "calendar" | "ca
 }
 
 export default function BusinessPreview() {
-  const [selected, setSelected] = useState(0);
   const panelId = useId();
-  const example = examples[selected];
+  const example = examples[0];
   const external = { href: PORTAL_URL, target: "_blank", rel: "noopener noreferrer" };
   return (
     <div className="kw-preview">
-      <div className="kw-preview-label"><span><i /> 실제 서비스 기반 구성 예시</span><a {...external}>데모 열기 <SiteIcon name="arrow" /></a></div>
-      <div className="kw-industries" aria-label="업종별 업무 화면 예시">{examples.map((item, index) => <button key={item.name} type="button" aria-pressed={selected === index} aria-controls={panelId} onClick={() => setSelected(index)}>{item.name}</button>)}</div>
+      <div className="kw-preview-label"><span><i /> 실제 서비스 기반 구성 예시</span><a {...external}>솔루션 체험 <SiteIcon name="arrow" /></a></div>
       <div className="kw-window" id={panelId} role="region" aria-label={`${example.name} ERP 업무 홈 예시`}>
         <div className="kw-topbar">
           <span className="kw-logo"><Image src="/kindworks-logo.png" alt="kindworks" width={2172} height={724} /></span><span className="kw-home-tab"><AppIcon name="home" /> 홈</span>
@@ -58,7 +56,7 @@ export default function BusinessPreview() {
             <div className="kw-panels">
               <div className="kw-panel kw-tasks"><div className="kw-panel-heading"><div><strong>오늘의 업무</strong><small>우선순위에 따라 처리할 항목입니다.</small></div><span>전체 보기 ›</span></div><div className="kw-task-list">{example.tasks.map((task, index) => <div key={task}><span className={`kw-task-icon kw-tone-${index}`}><SiteIcon name={(["layers", "box", "shield", "users"] as const)[index]} /></span><span><strong>{task}</strong><small>{example.descriptions[index]}</small></span><em>{["4건", "3건", "2개", "2건"][index]}</em><span className="kw-chevron">›</span></div>)}</div></div>
               <div className="kw-panel kw-quick"><div className="kw-panel-heading"><div><strong>빠른 실행</strong><small>자주 사용하는 업무를 바로 시작합니다.</small></div></div><div className="kw-shortcuts">{example.shortcuts.map((shortcut, index) => <a key={shortcut} {...external}><span><SiteIcon name={(["layers", "users", "box", "flow"] as const)[index]} /></span>{shortcut}</a>)}</div></div>
-              <div className="kw-panel kw-sales"><div className="kw-panel-heading"><div><strong>매출 흐름</strong><small>최근 6개월 공급가액 기준</small></div><em>↗ 12.4%</em></div><div className="kw-chart" role="img" aria-label={`${example.name} 최근 6개월 매출 추이 예시, 마지막 달 ${example.last}`}><div className="kw-chart-scale"><span>{selected === 1 ? "4억" : selected === 2 ? "2억" : "3억"}</span><span>{selected === 1 ? "2억" : "1억"}</span><span>0</span></div><div className="kw-bars">{example.bars.map((height, index) => <div key={index}><span style={{ height: `${height}%` }}>{index === 5 && <i>{example.last}</i>}</span><small>{index + 3}월</small></div>)}</div></div></div>
+              <div className="kw-panel kw-sales"><div className="kw-panel-heading"><div><strong>매출 흐름</strong><small>최근 6개월 공급가액 기준</small></div><em>↗ 12.4%</em></div><div className="kw-chart" role="img" aria-label={`${example.name} 최근 6개월 매출 추이 예시, 마지막 달 ${example.last}`}><div className="kw-chart-scale"><span>3억</span><span>1억</span><span>0</span></div><div className="kw-bars">{example.bars.map((height, index) => <div key={index}><span style={{ height: `${height}%` }}>{index === 5 && <i>{example.last}</i>}</span><small>{index + 3}월</small></div>)}</div></div></div>
               <div className="kw-panel kw-activity"><div className="kw-panel-heading"><div><strong>최근 업무 활동</strong><small>전체 사용자의 최신 업무 이력</small></div><span className="kw-activity-tab">전체 활동</span></div><div className="kw-activity-list">{example.activity.map((activity, index) => <div key={activity}><i /><span><strong>{activity}</strong><small>관리자 · {example.shortcuts[index]}</small></span><time>{["10:42", "10:28", "09:51"][index]}</time></div>)}</div></div>
             </div>
           </div>
