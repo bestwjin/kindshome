@@ -466,6 +466,7 @@ html { scroll-padding-top: 110px; }
 }
 @media (max-width: 760px) {
   .kh-laptop-hero .kh-hero-grid { width: calc(100% - 40px); grid-template-columns: minmax(0,1fr); gap: 18px; padding-block: 44px 18px; }
-  .kh-laptop-hero h1 { font-size: clamp(32px, 8vw, 48px); }
+  .kh-laptop-hero h1 { margin-inline: auto; font-size: clamp(32px, 8vw, 48px); text-align: center; }
+  .kh-laptop-hero .kh-hero-description { margin-inline: auto; text-align: center; }
   .kh-hero-device { max-width: 620px; width: 100%; justify-self: center; }
 }
