@@ -265,7 +265,7 @@ html { scroll-padding-top: 110px; }
 .kh-manage-common { margin-top: 18px; color: #c4d2e8; font-size: 12px; line-height: 1.6; text-align: center; word-break: keep-all; }
 .kh-manage-price > a { display: flex; justify-content: space-between; color: #d6e3ff; font-size: 12px; margin-top: 25px; padding-top: 18px; border-top: 1px solid #ffffff18; }
 .kh-manage-price > a:hover { color: white; }
-.kh-pricing-note { margin-top: 21px; color: #637187; font-size: 10px; line-height: 1.9; }
+.kh-pricing-note { margin-top: 21px; color: #637187; font-size: 11px; line-height: 1.9; }
 .kh-faq { display: grid; grid-template-columns: .8fr 1.4fr; gap: 80px; }
 .kh-faq > div > p:not(.kh-kicker) { color: #8b94a3; font-size: 13px; margin-top: 21px; }
 .kh-faq > div > a { color: #5579c7; margin-top: 17px; font-size: 12px; }
@@ -426,7 +426,7 @@ html { scroll-padding-top: 110px; }
   .kh-pricing-grid { grid-template-columns: 1fr; gap: 16px; } .kh-build-price,.kh-manage-price { padding: 25px 24px 0; } .kh-manage-price { padding-bottom: 24px; }
   .kh-price-heading h3 { font-size: 17px; } .kh-price-heading p { font-size: 10px; } .kh-price-heading > .kh-icon { width: 22px; height: 22px; }
   .kh-price-options { margin-top: 24px; gap: 24px; } .kh-price-options > div + div { padding-left: 23px; } .home-v2 .kh-price { font-size: 45px; }
-  .kh-price-options > div > p:last-child { font-size: 11px; } .kh-price-foot { font-size: 10px; } .kh-care-inclusions { font-size: 11px; gap: 10px 18px; } .kh-pricing-note { font-size: 10px; line-height: 1.9; }
+  .kh-price-options > div > p:last-child { font-size: 11px; } .kh-price-foot { font-size: 10px; } .kh-care-inclusions { font-size: 11px; gap: 10px 18px; } .kh-pricing-note { font-size: 11px; line-height: 1.9; }
   .kh-faq { grid-template-columns: 1fr; gap: 32px; } .kh-faq > div > p:not(.kh-kicker) { margin-top: 15px; } .kh-faq-list summary { font-size: 15px; padding-block: 21px; gap: 10px; }
   .kh-faq-list details > p { font-size: 14px; padding-left: 24px; padding-right: 12px; }
   .kh-contact { gap: 22px; padding: 72px 8px 56px; } .kh-contact h2 { font-size: 28px; }
