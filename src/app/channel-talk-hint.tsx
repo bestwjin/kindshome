@@ -36,6 +36,8 @@ export default function ChannelTalkHint() {
 
       hint.style.setProperty("--kh-channel-button-left", `${bounds.left}px`);
       hint.style.setProperty("--kh-channel-button-center", `${bounds.top + bounds.height / 2}px`);
+      hint.style.setProperty("--kh-channel-button-width", `${bounds.width}px`);
+      hint.style.setProperty("--kh-channel-button-height", `${bounds.height}px`);
 
       if (hint.dataset.state === "visible") return;
       hint.dataset.state = "visible";
