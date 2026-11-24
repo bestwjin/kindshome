@@ -62,6 +62,7 @@ export default function ContactSection() {
       <div className="kh-contact-copy">
         <h2>고객님, 회사의 이야기를<br /><em>들려주세요.</em></h2>
         <p>지금 사용하시는 엑셀, 반복되는 일, 바꾸고 싶은 과정.<br />어디서부터 시작하면 좋을지 함께 찾아보겠습니다.</p>
+        <p>AI 자동 응답 없이 카인즈 담당자가 직접 이야기를 듣고 답변드립니다.</p>
       </div>
       <div className="kh-contact-actions">
         <button className="kh-button kh-email-toggle" type="button" aria-expanded={open} aria-controls={panelId} onClick={() => setOpen(!open)}>

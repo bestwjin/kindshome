@@ -33,6 +33,7 @@
 
 .visits-admin-table-wrap {
   margin-top: 1.25rem;
+  max-height: 70vh;
   overflow: auto;
   border: 1px solid #d7e3e1;
   border-radius: 0.85rem;
