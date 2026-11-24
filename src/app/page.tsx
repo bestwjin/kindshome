@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import BusinessPreview from "./business-preview";
 import ContactSection from "./contact-section";
 import ServiceBridge from "./service-bridge";
@@ -27,6 +28,32 @@ export default function HomePage() {
   ] };
   return (
     <div className="home-v2">
+      <Script id="channel-talk" strategy="afterInteractive">
+        {`
+          (function () {
+            if (window.ChannelIO) return;
+
+            function channelIO() {
+              channelIO.c(arguments);
+            }
+            channelIO.q = [];
+            channelIO.c = function (args) {
+              channelIO.q.push(args);
+            };
+            window.ChannelIO = channelIO;
+            window.ChannelIOInitialized = true;
+
+            channelIO("boot", {
+              pluginKey: "cabf44e0-bee5-498e-ad38-b7427549bb1f",
+            });
+
+            var script = document.createElement("script");
+            script.src = "https://cdn.channel.io/plugin/ch-plugin-web.js";
+            script.async = true;
+            document.head.appendChild(script);
+          })();
+        `}
+      </Script>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <a className="kh-skip" href="#main">본문으로 바로가기</a>
       <header className="kh-header">
