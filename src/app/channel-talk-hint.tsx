@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import SiteIcon from "./site-icon";
 
 export default function ChannelTalkHint() {
   const hintRef = useRef<HTMLDivElement>(null);
@@ -70,7 +69,7 @@ export default function ChannelTalkHint() {
   return (
     <div className="kh-channel-hint" ref={hintRef}>
       또는 채널톡으로도 상담하실 수 있어요^^
-      <SiteIcon name="arrow" />
+      <span className="kh-channel-hint-arrow" aria-hidden="true" />
     </div>
   );
 }

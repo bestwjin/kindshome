@@ -284,12 +284,14 @@ html { scroll-padding-top: 110px; }
 .kh-contact h2 { position: relative; z-index: 1; font-size: 36px; letter-spacing: -1.6px; line-height: 1.35; color: #17283f; }
 .kh-contact h2 em { color: #315bf3; }
 .kh-channel-hint {
+  --kh-channel-hint-lift: 22px;
+  --kh-channel-hint-gap: 31px;
   position: fixed;
   z-index: 100;
-  top: var(--kh-channel-button-center, 100%);
-  right: calc(100% - var(--kh-channel-button-left, 100%) + 23px);
+  top: calc(var(--kh-channel-button-center, 100%) - var(--kh-channel-hint-lift));
+  right: calc(100% - var(--kh-channel-button-left, 100%) + var(--kh-channel-hint-gap));
   width: max-content;
-  max-width: calc(var(--kh-channel-button-left, 100%) - 35px);
+  max-width: calc(var(--kh-channel-button-left, 100%) - var(--kh-channel-hint-gap) - 12px);
   padding: 10px 13px;
   border: 1px solid #dce6fb;
   border-radius: 12px;
@@ -305,14 +307,42 @@ html { scroll-padding-top: 110px; }
   opacity: 0;
   transform: translate(5px, -50%);
 }
-.kh-channel-hint .kh-icon {
+.kh-channel-hint-arrow {
+  --kh-channel-arrow-stroke: 3px;
+  --kh-channel-arrow-start: #4b62eb;
   position: absolute;
   top: 50%;
-  left: 100%;
+  left: calc(100% + 3px);
   width: 23px;
-  height: 23px;
-  color: #315bf3;
-  transform: translateY(-50%);
+  height: calc(var(--kh-channel-hint-lift) + var(--kh-channel-arrow-stroke) / 2);
+  border-left: var(--kh-channel-arrow-stroke) solid var(--kh-channel-arrow-start);
+  border-bottom: var(--kh-channel-arrow-stroke) solid currentColor;
+  border-bottom-left-radius: 10px;
+  color: #7046df;
+  filter: drop-shadow(0 0 1px #fff) drop-shadow(0 2px 3px #5146cc45);
+}
+.kh-channel-hint-arrow::before,
+.kh-channel-hint-arrow::after {
+  position: absolute;
+  content: "";
+}
+.kh-channel-hint-arrow::before {
+  top: 0;
+  left: -7px;
+  width: 7px;
+  height: var(--kh-channel-arrow-stroke);
+  border-radius: 2px 0 0 2px;
+  background: var(--kh-channel-arrow-start);
+}
+.kh-channel-hint-arrow::after {
+  right: 0;
+  bottom: calc(var(--kh-channel-arrow-stroke) / -2);
+  width: 9px;
+  height: 9px;
+  border-top: var(--kh-channel-arrow-stroke) solid currentColor;
+  border-right: var(--kh-channel-arrow-stroke) solid currentColor;
+  border-top-right-radius: 2px;
+  transform: translateY(50%) rotate(45deg);
 }
 .kh-channel-hint[data-state="visible"] {
   visibility: visible;
