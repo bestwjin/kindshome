@@ -283,6 +283,46 @@ html { scroll-padding-top: 110px; }
 .kh-contact-copy { position: relative; z-index: 1; max-width: 640px; }
 .kh-contact h2 { position: relative; z-index: 1; font-size: 36px; letter-spacing: -1.6px; line-height: 1.35; color: #17283f; }
 .kh-contact h2 em { color: #315bf3; }
+.kh-channel-hint {
+  position: fixed;
+  z-index: 100;
+  top: var(--kh-channel-button-center, 100%);
+  right: calc(100% - var(--kh-channel-button-left, 100%) + 23px);
+  width: max-content;
+  max-width: calc(var(--kh-channel-button-left, 100%) - 35px);
+  padding: 10px 13px;
+  border: 1px solid #dce6fb;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 18px #17283f22;
+  color: #253b5e;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.45;
+  word-break: keep-all;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transform: translate(5px, -50%);
+}
+.kh-channel-hint .kh-icon {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 23px;
+  height: 23px;
+  color: #315bf3;
+  transform: translateY(-50%);
+}
+.kh-channel-hint[data-state="visible"] {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(0, -50%);
+  transition: opacity .3s ease, transform .3s ease;
+}
+.kh-channel-hint[data-state="fading"] {
+  transition: opacity .3s ease, transform .3s ease, visibility 0s .3s;
+}
 .kh-contact > div > p:not(.kh-kicker) { position: relative; z-index: 1; margin-top: 16px; font-size: 16px; color: #7a8aaa; line-height: 1.85; }
 .kh-contact .kh-kicker { position: relative; z-index: 1; font-size: 9px; color: #6a87ce; }
 .kh-contact-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; position: relative; z-index: 1; }

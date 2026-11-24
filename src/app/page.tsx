@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
 import BusinessPreview from "./business-preview";
+import ChannelTalkHint from "./channel-talk-hint";
 import ContactSection from "./contact-section";
 import ServiceBridge from "./service-bridge";
 import SiteIcon from "./site-icon";
@@ -148,6 +149,7 @@ export default function HomePage() {
         <section className="kh-section kh-container kh-faq" id="faq"><div><h2>함께하기 전,<br />궁금한 이야기.</h2><p>더 궁금한 점은 편하게 물어보세요.</p><a className="kh-text-link" href={KAKAO_CHAT_URL} target="_blank" rel="noopener noreferrer">카카오톡으로 문의하기 <SiteIcon name="arrow" /></a></div><div className="kh-faq-list">{SITE_FAQS.map((faq, index) => <details key={faq.question}><summary><span>0{index + 1}</span>{faq.question}<i aria-hidden="true">+</i></summary><p>{faq.answer}</p></details>)}</div></section>
 
         <ContactSection />
+        <ChannelTalkHint />
       </main>
       <footer className="kh-footer kh-container"><div className="kh-footer-top"><Link href="/" className="kh-brand" aria-label="kinds 홈"><Image src="/kinds-logo.png" alt="kinds" width={759} height={235} /></Link><p><strong>카인즈</strong><br />사업자 등록번호 : 257-07-02786 | 이메일 : thekinds@naver.com</p></div><div className="kh-footer-bottom"><span>맞춤 전산시스템 개발 · 지속적인 관리와 유지보수</span><span>© {new Date().getFullYear()} kinds. All rights reserved.</span></div></footer>
     </div>
